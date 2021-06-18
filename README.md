@@ -50,3 +50,12 @@ git pull origin main
 @AllArgsConstructor
 
 @NotEmpty validation을 DTO할 때 유용함
+
+
+
+
+--- 
+## 아키텍처
+
+
+
