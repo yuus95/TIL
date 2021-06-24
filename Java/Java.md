@@ -17,7 +17,7 @@
  - Stack 영역
    - 메소드가 호출될 떄 메소드의 스택 프레임이 저장되는 영역
 
-   - JVM은 자바 프로그램에서 메소드ㅏㄱ 호출되면, 메소드의 호출과 관계되는 지역 벼눗와 매개변수를 스택 영역에 저장
+   - JVM은 자바 프로그램에서 메소드가 호출되면, 메소드의 호출과 관계되는 지역 벼눗와 매개변수를 스택 영역에 저장
 
    - 스텍 영역은 메소드의 호출과 함께 할당되며, 메소드의 호출이 완료되면 소멸
 
@@ -64,3 +64,24 @@ TestYushin<String> test = new TestYushin<>();
 Optional<String> name = Optional.ofNullable("이름을 명시 안하면 비어있는 Optional객체를 반환 " )
 
 ```
+
+--- 
+## 스트림
+
+- 데이터의 흐름
+- 배열 또는 컬렉션 인스턴스에 함수 여러 개를 조합해서 원하는 결과를 필터링 하고 가공된 결과를 얻을 수 있다.
+- 람다를 이용해서 코드의 양을 줄이고 간결하게 표현할 수 있다.
+- 간단하게 병렬 처리가 가능하다
+- 스트림 생성 방법
+  - 생성하기, 가공하기, 결과 만들기
+```java
+      //ORDER  데이터 2개
+        List<Order> orders = orderRepository.findAllByString(new OrderSearch());
+
+
+        List<SimpeOrderDto> result = orders.stream() // 생성하기
+                .map(o -> new SimpeOrderDto(o)) //가공하기 Mapping 스트림 내 요소들을 하나씩 특정 값으로 변환 해 준다.
+                .collect(Collectors.toList()); //결과 만들기 Stream elements를 List로 변경한 메서드
+        return result;
+```
+- Collectors란 "Stream을 일반적인 List,Set등으로 변경시키는 Stream 매서드" 
