@@ -41,7 +41,7 @@
 
 ---
 
-## 스프링 DI
+##  DI
 
 - DI는 Dependency Injection의 약자로 의존 주입이라고 번역한다.
 
@@ -94,4 +94,107 @@ public class MemberRegisterService{
 - 객체 조립기
   - 객체를 생성하고 의존 객체를 주입해주는 클래스를 따로 작성하는 곳으로 쓰이는 클래스
   - 의존 객체를 주입한다는 것은 서로 다른 두 객체를 조립한다고 생각할 수 있는데 이런 의미에서 이 클래스를 조립기라고도 표현한다.
-==
+
+
+## 스프링 DI
+
+- 스프링은 DI를 지원하는 조립기이다.
+
+- 필요한 객체를 생성하고 생성한 객체에 의존을 주입한다
+
+```java
+
+@Configuration // 스프링 설정 클래스를 의미한다.  이 어노테이션이 있어야  스프링 설정 클래스로 사용할 수 있다.
+public class AppCtx{
+  @Bean // 해당 메서드가 생성한 객체를 스프링 빈이라고 설정한다.  메서드 이름을 빈 객체의 이름으로 사용한다.
+  public MemberDao memberDao(){
+    return new MemberDao();
+  }
+}
+
+// 스프링 컨테이너 생성
+ApplicationContext ctx =new AnnotationConfigApplicationContext(AppCtx.class);
+
+```
+
+- 객체를 생성하고 의존 객체를 주입하는 것은 스프링 컨테이너이므로 설정 클래스를 이용해서 컨테이너를 생성해야한다.
+
+
+- 컨테이너를 생성하면 getBean()메서드를 이용햇 사용할 객체를 구할 수 있다. 
+
+```java
+MemberRegisterService regSvc= ctx.getBean("memberRegSvc",MemberRegisterService.class);
+
+```
+
+- DI ->생성자 방식
+
+```java
+Public class MemberRegisterService{
+  pivate MemberDao memberDao;
+
+  public MemberRegisterService(MemberDao memberDao){
+    this.memberDao = memberDao;
+  }
+
+  public Long regist(RegisterRequest req){
+    Member member = memberDao.selectByEmail(req.getEmail());
+
+    return member.getId();
+  }
+}
+
+
+```
+
+
+- DI주입방식 
+
+  - 생성자 방식: 빈 객체를 생성하는 시점에 모든 의존 객체가 주입된다.
+      - 빈 객체를 생성하는 시점에 필요한 모든 의존 객체를 주입받기 때문에 객체를 사용할 때 완전한 상태로 사용할 수 있다.
+
+  - 설정 메서드 방식 : 세터 메서드이름을 통해 어떤 의존 객체가 주입되는지 알 수 있다.
+    - NullPointerException이 발생할 수 있음 ( Setter메소드를 작성 안하고 생성하는 경우가 있기 떄문에)
+
+
+- 싱글톤
+
+  - 스프링 컨테이너가 생성한 빈은 싱글톤 객체이다.
+  - 스프링은 설정 클래스를 그대로 사용하지 않는다. 대신 설정 클래스를 상속한 새로운 설정 클래스를 만들어서 사용한다. 
+
+- 자동주입(@Autowired)
+  - 스프링의 자동 주입 기능을 위한 것이다.
+  - 스프링 설정 클래스의 필드에 @Autowired 붙이면 해당 타입의 빈을 찾아서 필드에 할당 한다.
+  - @autowired 어노테이션을 이용해서 다른 설정 파일에 정의한 빈을 필드에 할당했다면 설정 메서드에서 이 필드를 사용해서 피룡한 빈을 주입하면 된다.
+
+  ```Java
+  public class ChangePasswordService{
+    @Autowired
+    private MemberDao memberDao;
+
+  }
+
+  // 설정클래스
+
+  public class AppCtx{
+    @Bean
+    public MemberDao memberDao(){
+      return new MemberDao();
+
+    }
+
+    @Bean
+    public ChangePasswordervice changePwdSvc(){
+      ChangePasswordService pwdSvc = new ChangePasswordService();
+      return pwdSvc
+    }
+
+    //@Autowired어노테이션을 붙이면 설정 클래스에서 의존을 주입하지 않아도 된다.
+    // 스프링이 해당 타입의 빈 객체를 찾아서 필드에 할당한다.
+  }
+  ```
+  
+- 주입대상
+  - 스프링 컨테이너는 자동 주입, 라이프사이클 관리등 단순 객체 생성 외에 객체 관리를 위한 다양한 기능을 제공하는데 빈으로 등록한 객체에만 기능을 적용한다.
+
+  - 객체를 스프링 빈으로 등록할 떄와 등록하지 않을 때의 차이는 스프링 컨테이너가 객체를 관리하는지 여부이다.
