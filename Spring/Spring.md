@@ -287,7 +287,7 @@ Public class MemberRegisterService{
 
   ```
 
-  -프로토타입 범위를 갖는 빈은 완전한 라이프 사이클을 따르지 않는다는 점에 주의해야 한다.
+  - 프로토타입 범위를 갖는 빈은 완전한 라이프 사이클을 따르지 않는다는 점에 주의해야 한다.
 
   - 프로토타입 범위의 빈을 사용할 떄에는 빈 객체의 소멸 처리를 코드에서 직접 해야 한다.
 
@@ -311,7 +311,7 @@ Public class MemberRegisterService{
   - 핵심 기능에 공통 기능을 삽입하는 방법
     - 1 컴파일 시점에 코드에 공통 기능을 삽입하는 방법
     - 2 클래스 로딩 시점에 바이트 코드에 공통 기능을 삽입하는 방법
-    - 3 런타임에 프록시 객체를 생성햏서 공통 기능을 삽입하는 방법
+    - 3 런타임에 프록시 객체를 생성해서 공통 기능을 삽입하는 방법
   
     </br>
 
@@ -330,7 +330,7 @@ Public class MemberRegisterService{
 
     - Pointcut : Jointpoint의 부분 집합으로서 실제 Adivce가 적용되는 Joinpoint를 나타낸다.
 
-    - Weaving : Advice를 핵심 로짖ㄱ 코드에 적용하는 것을 weaving이라고 한다
+    - Weaving : Advice를 핵심 로직 코드에 적용하는 것을 weaving이라고 한다
     
     - Aspect 여러 객체에 공통으로 적용되는 기능을 Aspect라고 한다. ex) 트랜잭션이나 보안
 
@@ -345,10 +345,108 @@ Public class MemberRegisterService{
     - After Advice : 익셉션 발생 여부에 상관 없이 대상 객체의 메서드 실행 후 공통 기능을 실해한다.
 
     - Around Advice : 대상 객체의 메서드 실행 전, 후 또는 익셉션 발생 시점에 공통 기능을 실행하는데 사용한다.
-    
-     
+
+
+  - 구현
+    - Aspect로 사용할 클래스에 @Aspect 어노테이션을 붙인다.
+    - @Pointcut 어노테이션으로 공통 기능을 적용할 Pointcut을 정의한다.
+    - 공통 기능을 구현한 메서드에 @Around 어노테이션을 적용한다
+
+  - ```java
+
+      // 사용방법
+      
+        @Aspect
+        @Component
+        public class TestYushin {
+
+
+        @Pointcut("execution(* com.example.jpa_shop..*())")/
+        private void publicTarget(){
+
+        }
+
+        @Around("publicTarget()") // publicTarget메소드에 정의한 PointCut에 공통 기능을 적용한다
+        public Object measure(ProceedingJoinPoint joinPoint) throws Throwable{
+                long start = System.nanoTime();
+                try{
+                        Object result = joinPoint.proceed(); // 대상 객체의 메소드가 실행된다 (프록시객체 말고 주요기능들이 실행)
+                        return result;
+
+                } finally {
+                        long finish = System.nanoTime();
+                        Signature sig = joinPoint.getSignature();
+                        System.out.printf("%s.%s(%s) 실행시간 : %d ns\n",joinPoint.getTarget().getClass().getSimpleName()
+                                ,sig.getName()
+                                , Arrays.toString(joinPoint.getArgs())
+                                ,(finish-start));
+                  // 주요 기능을 실행한 다음 실행되는 부분
+                }
+        }
+
+      }
+    ```
+
+  - 메소드 정의
+    - 메서드 시그니처 : 메서드 이름 + 파라미터 
+    - @EnableAspectJAutoProxy : 설정 클래스에 붙여 놓으면 @Aspect어노테이션을 읽어올 수 있다. -- > Aspect붙어있는 클래스에 @Component 어노테이션을 붙여도 된다. 
+    - @Pointcut : 공통 기능을 적용할 대상을 설정
+    - @Around : Around Advice를 설정한다.
+    - ProceedingJoinPoint : 프록시 대상 객체의 메서드를 호출할 떄 사용한다. 
+      ex) proceed()메소드를 실행하면 주요기능 실행 
+    - execution 명시자 표현식 : Advice를 적용할 메서드를 지정할 떄 사용
+    execution(수식어 패턴? 리턴타입패턴 클래스이름 패턴?메서드이름패턴(파라미터패턴))
+      - 클래스..(.. : 하위 클래스을 의미)
+      - * 모든값
+      - 매개변수 .. : 0개이상
+    - Advice 적용순서
+      - @Aspoect 어노테이션 밑에 @Order옵션추가하기
+
+    - @Around의 Pointcut 설정과 @Pointcut재사용
+      - @Around 에 Execution명시자를 직접 지정
+        ```Java
+
+        @Around("execution(public * chap07..*(..))")
+
+        ```
+      - 공통 @Pointcut재사용
+        - ```java
+            // test_yushin 패키지에 있는 AOP
+          @Aspect
+          public Class Example1{
+            @Pointcut("execution(public * yushin..*(..))")
+            public void exampleStart(){
+
+            }
+          }
+
+          //다른 패키지에 있는 AOP
+          @Aspect
+          public class Example2
+          
+            @Around("test_yushin.example1.exampleStart()"))
+            public object execute(ProceedingJoinPoint joinPoint) throw Throwable{
+
+            }
+          ```
+          - 해당 Pointcut의 완전한 클래스 이름을 포함한 메서드 이름을 @Around어노테이션에서 사용하면 된다.
 
 
 
+  - 프록시 객체
+    - AOP을 적용하여 실행 된 클래스는 프록시로 변한다.
+      ex) MemberDService 클레스에서 실행된 함수는  AOP을 적용 한 순간
+      프록시로 변하게 된다.
+    - 생성 방식
+      - 스프링은 AOP를 위한 프록시 객체를 생성할 때 실제 생성할 빈 객체가 인터페이스를 상속하면 인터페이스를 이용해서 프록시를 생성한다. 
+      -- > 인터페이스말고 클래스를 상속하고 싶을 땐 
+      설정클래스의 @EnableAspectJAutoProxy(proxyTargetClass = True) 옵션을 추가해준다.
 
+---
+## DB
+
+- 커넥션 풀
+  - 일정 개수의 DB커넥션을 미리 만둘어두는 기법
+  - 최초 연결에 따른 응답 속도 저하와 동시 접속자가 많을 떄 발생하는 부하를 줄이기 위해 사용하는 것
   
+  - 커넥션 풀 기능을 제공하는 모듈 -> HikariCP,Tomcat JDBC 등등
