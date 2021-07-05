@@ -450,3 +450,171 @@ Public class MemberRegisterService{
   - 최초 연결에 따른 응답 속도 저하와 동시 접속자가 많을 떄 발생하는 부하를 줄이기 위해 사용하는 것
   
   - 커넥션 풀 기능을 제공하는 모듈 -> HikariCP,Tomcat JDBC 등등
+
+---
+
+## Transactional
+
+- @Transactional 어노테이션을 사용하면 트랜잭션 범위를 매우 쉽게 지정할 수 있다.
+
+
+어노테이션을 사용하지 않은 경우 
+```java
+public void  yushin_jpa{
+  public static void main(String[] args){
+
+      //엔티티 매니저  팩토리는 하나만 생성해서 애플리케이션 전체에서 공유 .
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
+
+        //엔티티 매니저는 쓰레드간에 공유X (사용하고 버려야 한다)
+        EntityManager em = emf.createEntityManager();
+
+
+      // 트랜잭션 처리를 직접 해줘야한다.
+        EntityTransaction tx = em.getTransaction();
+        tx.begin();
+      
+      try{
+          Team teamA = new Team();
+          teamA.setName("A팀");
+          em.persist(teamA);
+      }
+      catch{
+        tx.rollback();
+      }
+      finally{
+        em.close()
+      }
+      emf.close()
+
+  }
+}
+
+```
+
+
+- 트랜젹선 어노테이션 사용 할 경우 
+
+
+```Java
+
+// saveItem 안에서 동일한 트랜잭션 범위를 쉽게 할 수 있다. 
+public class ItemService{
+  private final ItemRepository itemRepository;
+
+  @Transactional
+  public void saveItem(Item item){
+    itemRepository.save(item);
+  }
+}
+
+```
+
+- 프록시
+  - 스프링은 @Transactional 어노테이션을 이용해서 트랜잭션을 처리하기 위해 내부적으로 AOP를 사용한다.
+
+- SQLException
+  - 별도 설정을 추가하지 않으면 발생한 익셉션이 RuntimeException일 떄 트랜잭션을 롤백 한다. 
+  Exception클래스를 구현할 때 RuntimeException을 상속하는 이유다
+  
+    하지만 SQLException은 상속하고 있찌 않으므로 롤백을 하지 않는다. 롤백을 하고싶다고
+
+     ```java
+    @Transational(rollbackFor=SQLException.class)
+    을 설정해주면 된다/
+     ```
+
+- 트랜잭션 전파
+
+  - @Transaction 의 propagation속성은 기본값이 REQUIRED이다.
+  현재 진행 중인 트랜잭션이 존재하면 해당 트랜잭션을 사용하고 존재하지 않으면 새로운 트랜잭션을 생성한다.
+
+  ```java
+  public class ChangePasswordService{
+    @Transactional
+    public void changePassword(String,email,String oldPwd,String newPwd){
+      Member member = memberDao.selectByEmail(email);
+      if(member == null){
+        throw new MemberNotFoundException();
+
+      }
+
+      memberchangePassword(oldPwd,newPwd);
+      memberDao.update(member);
+
+      //memberDao.update의 쿼리문도 하나의 트랜잭션 안에서 실행된다.
+    }
+  }
+
+  // Transaction이 없는 클래스
+  public class MemberDao{
+    private JdbcTemplate jdbcTemplate;
+
+    public void update(Member member){
+      jdbcTemplate.update(
+        "update MEMBER set NAME = ?, PASSWORD =? where EMAIL =?", member.geName(),member.getPassword(),member.getEmail());
+    }
+  }
+
+  
+  ```
+
+
+---
+## SPRING MVC
+
+```java
+
+@Configuration
+@EnableWenMvc
+public class MvcConfig imlements WebMvcConfigure{
+  @Override
+  public void configureDefaultServletHandling{
+    confirer.enabke();
+  }
+
+  @Override
+  public void confureViewResolvers(ViewResolverRegistry registry){
+    registry.jsp("/WEB-INF/view/",".jsp")
+  
+  }
+
+}
+
+
+```
+
+
+- @EnableWebMvc : 스프링 MVC설정을 활성화 한다.
+  - 스프링 MVC를 사용하려면 다양한 구성 요소를 설정해야 한다.
+  이 요소를 처음부터 끝까찌 직접 구성하면 매우 복잡해진다. 
+  이러한 복잡한 설정을 대신 해주는 어노테이션이다.
+
+
+- WebMvcConfigurer 
+  - @EnableWebMvc 어노테이션이 스프링 MVC를 사용하는데 필요한 기본적인 구성을 설정해준다면,
+  WebMvcConfigurer 인터페이스는 스프링 MVC의 개별 설정을 조정할 때 사용한다.
+
+
+- @Controller
+  - 웹 요청을 처리하고 그 결과를 뷰에 전달하는 스프링 빈 객체이다.
+
+  - @Controller 어노테이션과 @GetMapping 또는 @PostMapping 와 같은 요청 매핑 어노테이션을 이용해서 처리할 경로를 지정해 주어야 한다.
+
+```java
+@Controller
+public class HelloController{
+  
+  @GetMapping("/hello")
+  public String hello(Model model,
+  @RepestParam(value = "name",required = false) String name){
+    model.addAttribute("greeting","안녕하세요"+name);
+    return "hello";
+  } )
+}
+
+```
+  - model : 커느롤러의 처리 결과를 뷰에 전달할 떄 사용한다.
+  - @RequestParam어놑에ㅣ션은 HTTP 요청 파라미터의 값을 메서드의 파라미터로 전달할 떄 사용된다. 
+
+  - 컨트롤러의 처리 결과를 보여줄 뷰 이름"hello"을 리턴한다.  
