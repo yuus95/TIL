@@ -40,6 +40,18 @@
 
 
 ---
+## IOC
+- Inversion of Control : 제어의 역전
+- 제어의 흐름을 사용자가 컨트롤 하지않고 위임한 특별한 객체에 모든것을 맡긴다.
+
+---
+## POJO
+
+- EJB 등에서 사용되는 Java Bean이 아닌 Getter 와 Setter 로 구성된 가장 순수한 형태의 기본 클래스를 POJO라 한다.
+
+
+
+---
 
 ##  DI
 
@@ -89,7 +101,7 @@ public class MemberRegisterService{
 ``` 
 
 - 캐시
-  - 데이터 갑승ㄹ 복사해 놓은 임시 장소를 가리킨다. 보통 조회 속도 향상을 위해 캐시를 사용한다.
+  - 데이터 값을 복사해 놓은 임시 장소를 가리킨다. 보통 조회 속도 향상을 위해 캐시를 사용한다.
 
 - 객체 조립기
   - 객체를 생성하고 의존 객체를 주입해주는 클래스를 따로 작성하는 곳으로 쓰이는 클래스
@@ -165,7 +177,7 @@ Public class MemberRegisterService{
 - 자동주입(@Autowired)
   - 스프링의 자동 주입 기능을 위한 것이다.
   - 스프링 설정 클래스의 필드에 @Autowired 붙이면 해당 타입의 빈을 찾아서 필드에 할당 한다.
-  - @autowired 어노테이션을 이용해서 다른 설정 파일에 정의한 빈을 필드에 할당했다면 설정 메서드에서 이 필드를 사용해서 피룡한 빈을 주입하면 된다.
+  - @autowired 어노테이션을 이용해서 다른 설정 파일에 정의한 빈을 필드에 할당했다면 설정 메서드에서 이 필드를 사용해서 필요한 빈을 주입하면 된다.
 
   ```Java
   public class ChangePasswordService{
@@ -297,6 +309,13 @@ Public class MemberRegisterService{
 
 - 프록시 객체 
    - 핵심기능의 실행은 다른 객체에 위임하고 부가적인 기능을 제공하는 객체를 프록시라고 한다. ex) 핵심기능 - 팩토리얼 계산 , 부가기능 - 함수 시작 시간,끝나는시간계산
+   핵심기능이 있는 클래스를 인터페이스로 상속받아서 사용한다.
+
+  </br>
+
+   - 프록시 객체는 원래 객체를 감싸고 있는 객체이다. 
+   원래 객체와 타입은 동일하다 프록시 객체가 원래 객체를 감싸서 client의 요청을 처리하게 하는 패턴 
+   - 접근을 제어하고 시거나, 부가 기능을 추가하고 싶을 떄 사용한다.
    
    - 특징:
       - 핵심 기능은 구현하지 않는다.
@@ -478,6 +497,7 @@ public void  yushin_jpa{
           Team teamA = new Team();
           teamA.setName("A팀");
           em.persist(teamA);
+          em.commit;
       }
       catch{
         tx.rollback();
@@ -517,7 +537,7 @@ public class ItemService{
   - 별도 설정을 추가하지 않으면 발생한 익셉션이 RuntimeException일 떄 트랜잭션을 롤백 한다. 
   Exception클래스를 구현할 때 RuntimeException을 상속하는 이유다
   
-    하지만 SQLException은 상속하고 있찌 않으므로 롤백을 하지 않는다. 롤백을 하고싶다고
+    하지만 SQLException은 상속하고 있지 않으므로 롤백을 하지 않는다. 롤백을 하고싶다면 
 
      ```java
     @Transational(rollbackFor=SQLException.class)
