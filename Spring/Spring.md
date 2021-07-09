@@ -590,7 +590,7 @@ public class ItemService{
 public class MvcConfig imlements WebMvcConfigure{
   @Override
   public void configureDefaultServletHandling{
-    confirer.enabke();
+    confirer.enable();
   }
 
   @Override
