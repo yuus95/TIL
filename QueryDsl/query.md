@@ -144,7 +144,7 @@ compileQuerydsl {
     ```
 
 
-- Select(JPQL)
+- ## Select(JPQL)
     ```java
     @Test
     public void select_jpql(){
@@ -161,7 +161,7 @@ compileQuerydsl {
 
     ```    
 
-- QueryDsl - Select
+- ## QueryDsl - Select
     - QueryDsl은 JPQL빌더
     - JPQ: 문자 실행(실행 시점 오류), QueryDsl : 코드(컴파일 시점 오류)
     - JPQL:파라미터 바인딩 직업, QueryDsl : 파라미터 바인딩 자동 처리
@@ -185,11 +185,48 @@ compileQuerydsl {
 
     ```
 
+</br>
+
+- ## Search
+    ```java
+
+    @Test
+    public void search(){
+        Member findMember = qf
+                .selectFrom(member)
+                .where(member.username.eq("member1")
+                        .and(member.age.eq(10)))
+                .fetchOne();
+
+        Assertions.assertThat(findMember.getUsername()).isEqualTo("member1");
+
+    }
+
+
+    @Test //Search 매소드랑 같은역할
+    public void searchAndParam(){
+        Member findMember = qf
+                .selectFrom(member)
+                .where(
+                        member.username.eq("member1"),
+                        member.age.eq(10) // and 일 경우 ,만 써도된다.
+                )
+                .fetchOne();
+
+        Assertions.assertThat(findMember.getUsername()).isEqualTo("member1");
+
+    }
+
+
+    ```
+
+
+
 
 ---
 
-- JPAQueryFactory 
+- ## JPAQueryFactory 
     - QueryDSL 사용할 떄 엔티티 매니저 같은 느낌을 준다.
     - 필드로 제공해도 동시성 문제를 걱정안해도된다.
         스프링 프레임워크는 여러 쓰레드에서 동시에 같은 EntityManager에 접근해도, 트랜잭션 마다 별도의 영속성 컨텍스트를 제공하기 떄문에 동시성 문제는 걱정 안해도 된다.
-        
+

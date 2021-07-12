@@ -59,3 +59,23 @@ git pull origin main
 
 
 
+---
+
+## IntelliJ 팁
+
+- Intellij Gradle 대신 자바로 바로 실행하기
+
+    - Preferences -> Build , Execution, Deployment -> Build Tools -> Gradle
+
+    - Build and run using:Gradle -> IntellijDea
+    - Run tests using : Gradle -> Intellij IDEA
+
+
+- 롬북 적용
+
+    - Preferences -> plugin -> lombok 검색 실행(재시작)
+    - Preferences -> Annotation processors 검색 -> Enable annotation processing 체크(재시작)
+
+    - 임의의 테스트 클래스를 만들고 게터 세터 확인하기
+
+

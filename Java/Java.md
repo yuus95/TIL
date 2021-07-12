@@ -23,6 +23,211 @@
 
    - 높은 주소에서 낮은 주소의 방향으로 할당
 ---
+## 생성자를 이용한 final멤버 변수의 초기화
+
+- final 변수 
+  - "마지막의 또는 변경될 수 없는"의 의미를 가지고 있으며 거의 모든 대상에 사용될 수 있다.
+
+  - 변수에 사용되면 값을 변경할 수 없는 상수가 되며, 메서드에 사용되면 오버라이딩을 할 수 없게 된다. 클래스에 사용되면 자신을 확장하는 자손 클래스를 정의하지 못하게 된다.
+
+  ```
+  final이 사용될 수 있는 곳 - 클래스,메서드,멤버변수, 지역 변수
+  ```
+- 생성자를 이용한 final멤버 변수의 초기화
+
+  - final이 붙은 변수는 상수이므로 일반적으로 선언과 초기화를 동시에 하지만, 인스턴스 변수의 경우 생성자에서 초기화 되도록 할 수 있다.
+
+  - 이기능을 화룡하면 각 인스턴스마다 final이 붙은 멤버변수가 다른 값을 갖도록 하는것이 가능하다
+
+  ```java
+  class card{
+    finial int Number;
+    final int String KIND;
+    Card(String kind,int num){
+      KIND = kind;
+      Number = num;
+    }
+  }
+  ```
+
+---
+## 인터페이스
+
+- 인터페이스는 일종의 추상 클래스이다. 추상화 정도가 높아서 추상클래스와 달리 몸통을 갖춘 일반 메서드 또는 멤버변수를 구성원으로 가질 수 없다. 
+- 다른 클래스를 작성하는데 도움 줄 목적으로 작성된다.
+
+- 작성
+  ```java
+  interface 인터페이스이름{
+    public static final 타입 상수이름 = 값;
+    public abstract 메서드 이름(매개변수 목록);
+  }
+  // 모든 멤버 변수는 public static final이어야 하며, 이를 생략 할 수 있다.
+  // 모든 메서드는 public abstract이어야 하며 이를 생략할 수 있다.
+  // static메서드와 디폴트 메서드는 예외
+  ```
+
+- 상속
+  - 인터페이스는 인터페이스로부터만 상속받을 수 있으며 클래스와는 달리 다중상속, 즉 여러 개의 인터페이스로부터 상속을 받는 것이 가능하다.
+
+  ```java
+  interface Movable{
+    void move(int x,int y)
+  }
+
+  interface Attackable{
+    void attack(Unit u);
+  }
+
+  interface Fightable extends Movable,Attackable{}
+  ```
+
+- 구현
+  - 인터페이스도 추상클래스처럼 그 자체로는 인스턴스를 생성할 수 없으며 추상클래스가 상속을 통해 추상 메서드를 완성하는 것처럼, 인터페이스도 자신에 정의된 추상메서드의 몸통을 만들어주는 클래스를 작성해야 한다.
+
+  ```java
+  
+  class 클래스이름 implements 인터페이스이름{
+
+  }
+
+  // 만일 구현하는 인터페이스의 메서드 중 일부만 구현한다면, abstract를 붙여서 추상클래스로 선언해야 한다.
+
+  abstract class Fighter implements Fightable{
+    public void move(int x, int y ){
+      this.x +=x
+      this.y += y
+    }
+  }
+
+
+  // 상속과 구현을 동시에 하는법
+  class A extend b implemnets b{
+    public void move(int x , int y ){
+      this.x +=x
+      this.y += y
+    }
+  }
+
+- 오버라이딩 할 때는 조상의 메서드보다 넓은 범위의 접근 제어자를 결정해야한다.
+  - interface메소드는 public abstract이 기본적으로 지정되있으므로,
+  구현할 때는 제어자를 public으로 반드시 해줘야 한다.
+
+  
+- 인터페이스를 이용한 다형성
+  - 다형성 : 자손클래스의 인스턴스를 조상타입의 참조변수로 참조하는것이 가능하다.
+
+  - 인터페이스 타입의 매개변수가 갖는 의미는 메서드 호출 시 해당 인터페이스를 구현한 클래스의 인스턴스를 매개변수로 제공해야 한다는 것이다.
+    ```java
+    Fightable method(){
+      return new firter() 
+    }
+    ```
+
+
+    ```java
+     static void main(String argsp[]){
+       b test = makeA.getAClass();  
+      // 리턴타입이 인터페이스이므로 구현한 클래스의 인스턴스를 반환 한다.
+       // b test = new A(); 다형성을 사용한것과 같다. 조상 타입의 참조변수로 사용할 수 있다. 
+
+       test.testmethod();
+     }
+
+     class makeA {
+       public static b getAClass{
+         return new a();
+       }
+     }
+
+
+     class a implements b{
+      public void testmethod(){
+        Syetem.out.println("b인터페이스 테스트");
+      }
+     }
+
+
+     interface b{
+       void testmethod(); // public abstract 생략가능
+     }
+
+    ```
+
+- 인터페이스 장점
+  - 개발시간을 단축시킬 수 있다.
+    - 인터페이스를 작성해놓으면  여러군데에서 인터페이스를 통해 개발을 할 때 동시에 개발을 할 수 있다. 
+- 표준화
+  - 프로젝트에 사용되는 기본 틀을 인터페이스로 작성한다음 개발자들에게 인터페이스를 구현하여 프로그램을 작성하도록 함으로써 보다 일관되고 정형화된 프로그램의 개발이 가능하다.
+
+- 서로 관계 없는 클래스들에게 관계를 맺어 줄 수 있다.
+  - 서로 아무런 관계도 없는 클래스들에게 하나의 인터페이스를 공통적으로 구현하도록 함으로써 관계를 맺어 줄 수 있다.
+
+- 인터페이스 사용예시
+  - Barrack, factory,a,b..  > build에 속해 있는 자식 클래스들 
+  - Barrack,factory에만 따로 기능을 추가하고 싶을 때 인터페이스사용
+  ```java
+  interface Liftable{
+    void liftoff(); // 물건들어올리기
+  }
+
+  //Liftable의 메소드 기능 구현 클래스
+  class LiftableImpl implements Liftable{
+    public void liftoff(){
+      // 함수기능구현
+    }
+
+  class Barrack extends Building implements Liftable{
+    LiftableImpl l = new LiftableImpl();
+    void liftOff() { I.liftOff();} // LiftableImpl 클래스를 이용하여 메소드 기능 구현 
+    } 
+  }
+  ```
+
+- 인터페이스 이해
+  - 클래스를 사용하는 쪽과 클래스를 제공하는 쪽이 있다.
+  - 메서드를 사용하는 쪽에서는 사용하려는 메서드의 선언부분만 알면 된다.
+  ```java
+  class InterfaceTest3{
+    public static void main(String[] args){
+      A a = new A();
+      a.methodA();
+    }
+  }
+
+
+  class A{
+    void methodA(){
+      I i=  InstanceManager.getInstance();
+      i.methodB();
+      System.out.println(i.toString()); // i로 Object클래스이 메서드 호출 가능
+    }
+  }
+
+  interface I {
+    public abstract void methodB();
+  }
+
+  class B implements I{
+    public void methodB(){
+      System.out.println("methodB in B class");
+
+    }
+    public String toString() {return "Class B"};
+
+  }
+
+  class InstanceManager{
+    public static I getInstance(){
+      return new B();
+    }
+  }
+
+  // 모든 객체는 Object클래스에 정의된 메서드를 가지고 있을 것이기 떄문에 ToString사용이 허용된다.
+  ```
+
+
+---
 ## 다형성(polymorphism)
 
 - 다형성
@@ -33,10 +238,10 @@
   // CationTv는 tv를 상속받음
   Tv t = new Tv();
   CpationTv c = new CationTv();
-  Tv t = new CaptionTv();
+  Tv t = c
 
   // t 는 CaptionT 인스터스의 모든 멤버를 사용할 수 없다.
-  // 둘 다 같은 타입으 ㅣ인스턴스지만 참조변수의 타입에 따라 사용할 수 있는 멤버의 개수가 달라진다.
+  // 둘 다 같은 타입 인스턴스지만 참조변수의 타입에 따라 사용할 수 있는 멤버의 개수가 달라진다.
  
   ```
 - 참조변수가 사용할 수  멤버의 개수는 인스턴스의 멤버 개수보다 같거나 적어야 한다.
