@@ -638,3 +638,6 @@ public class HelloController{
   - @RequestParam어놑에ㅣ션은 HTTP 요청 파라미터의 값을 메서드의 파라미터로 전달할 떄 사용된다. 
 
   - 컨트롤러의 처리 결과를 보여줄 뷰 이름"hello"을 리턴한다.  
+
+
+--- 
