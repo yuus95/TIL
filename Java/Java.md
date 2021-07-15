@@ -458,6 +458,8 @@
   static void startInstall2() throws SpaceException{
     if (!enoughMemory())
     throw new RuntimeException(new MemoryException("메모리가 부족합니다")); // RuntimeException으로 감싸버렸기 떄문에 unchecked예외가 되버림
+
+    //checked예외를 unchecked예외로바꾸면 예외처리가 선택적이 되므로 억지로  예외처리를 하지 않아도 된다.
   }
 
   ```
@@ -554,7 +556,77 @@ public class Num_class{
 }
 ```
 
+---
 
+- ## 래퍼 클래스
+  - 기본 타입에 해당하는 데이터를 객체로 포장해 주는 클래스
+    - byte,short,int,long,float,double,boolean,char
+
+- ## Arrays 
+  - 배열을 다루는데 유용한 메서드가 정의되어 있다.
+    - 배열의 복사 : copyOf() - 전체복사 , copyOfRange(arr,2,4) 부분 복사
+    - 배열 채우기 : 배열의 모든 요소를 지정된 값으로 채운다. setAll() 배열을 채우는데 사용할 함수형 인터페이스를 매개변수로 받는다.
+
+- ## Stack , Queue
+  - Stack
+    - LIFO(Last in First out)
+      - Object push() - 맨 끝에 데이터 추가
+      - Object pop() - 맨 끝에 있는 데이터 추출
+
+  - Queue 
+    - FIFO(First In First Out)
+      - Object poll() - 맨 앞에서객체를 꺼내서 반환
+      - boolean Offer() - 맨 뒤에 객체를 저장
+  - PriorityQueue
+    - 우선순위 큐 : 우선순위가 제일 높은것부터 꺼내옴 - heap이라는 자료구조의 형태로 저장한다.
+    - null을 저장하면 nullPointerException발생
+      ```java
+      Queue = pq = new PriorityQueue();
+      pq.offer(3);
+      pqp.offer(1);
+      pq.offer(5);
+      System.out.println(pq); // 1이 제일 먼저 출력 우선순위는 숫자가 작을수록 높다
+      ```
+  - Deque
+    - Double-Ended-Queue :양쪽에서 추가/삭제가 가능한 큐(조상이 큐이다)
+    - 구현체로는 ArrayDeque과 LinekedList등이 있다.
+
+    - offerFirst,offerLast (데이터 저장)
+    - pollFirst, pollLast (데이터 삭제 )
+  
+---
+
+- ## Iterator
+
+  - 컬렉션 프레임웍에서는 컬렉션에 저장된 요소들을 읽어오는 방법을 표준화 했다
+
+  - 컬렉션에 저장된 각 요소에 접근하는 기능을 가진 Iterator 인터페이스를 정의하고, Collection인터페이스에는 iterator(iterator를 구현한 클래스의 인스턴스)를 반환하는 iterator()를 정의하고 있다.
+
+  - 코드의 일관성을 유지하여 재사용성을 극대화하는 것이 객체지향 프로그래밍의 중요한 목적 중의 하나.
+```java
+// Iterator 인터페이스
+public interface Iterator{
+  boolean hasNext(); // 읽어 올 요소가 남아있는지 확인
+  Object next(); // 다음 요소를 읽어온다
+  void remove(); // next()로 읽어 온 요소를 삭제한다.(선택적 기능)
+}
+
+// Collection 인터페이스 일부
+
+public interface Collection{
+  public Iterator iterator(); // iterator를 구현한 클래스의 인스턴스르르 반환하는 메소드;
+}
+
+// 사용방법
+
+public void static main(String args[]){
+  Collection c = new ArrayList(); // 참조변수의 타입을 Collection을 해서 구현하면 Collection 다른 타입도 사용할 수 있게 재사용성을 보장해준다.
+  Iterator it = c.iterator();
+  
+  while(it.hasNext()){
+    System.out.print(it.nenxt());
+  }
+}
 
 --- 
 ## 제너릭(generic)
