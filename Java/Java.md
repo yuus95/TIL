@@ -627,6 +627,177 @@ public void static main(String args[]){
     System.out.print(it.nenxt());
   }
 }
+```
+---
+## Set
+
+- ### HashSet
+  - Set인터페이스를 구현한 가장 대표적인 컬렉션 중복된 요소를 저장하지 않는다.
+
+  ```java
+  public class hashset1 {
+      public static void main(String[] args) {
+          Object [] objArr= {"1",new Integer(1), "2","2","3","3","4","4","4"};
+          Set set = new HashSet();
+
+          for (int i = 0; i < objArr.length; i++){
+              set.add(objArr[i]);
+          }
+          // 1은 String 객체와 Integer 객체가 있어서 2개가 나온다.
+          System.out.println("set  =" +set);
+      }
+  }
+  
+
+- ### TreeSet
+```java
+/**
+ * TreeSet은 이진 검색 트리라는 자료구조의 형태로 데이터를 저장하는 컬렉션 클래스이다.
+ * 이진 검색 트리는 정렬, 검색, 범위검색에 높은 성능을 보이는 자료구조이며 TreeSet은 이진 검색 트리의 성능을 향상시킨 레드-블랙 트리로 구현되어 있다.
+ * 중복된 데이터의 저장을 허용하지 않으며 정렬된 위치에 저장하므로 저장순서를 유지하지도 않는다.
+ */
+public class Tree {
+    public static void main(String args[]){
+        TreeSet set = new TreeSet();
+        
+        
+        // TresSet integer의 자동 정렬방식이 사용됐음.
+        for ( int i = 0; set.size() <6; i++){
+            int num = (int)(Math.random()* 100) +1;
+            set.add(num);
+        }
+
+        System.out.println("set" + set);
+
+
+        System.out.println("50보다 작은 값" + set.headSet(new Integer(50)));
+        System.out.println("50보다 큰 값" + set.tailSet(new Integer(50)));
+        System.out.println("첫 번째 값 " + set.first());
+        System.out.println("첫 번째 값 " + set.ceiling(new Integer(50)));
+        System.out.println("첫 번째 값 " + set.higher(new Integer(50)));
+
+
+    }
+
+}
+
+
+/**
+ *  트리 기본 구조
+ *  이진 검색 트리
+ *      - 모든 노드는 최대 두 개의 자식노드를 가질 수 있다.
+ *      - 왼족 자식노드의 값은 부모녿의 값보다 작고 오른쪽 자식 노드의 값은 부모 노드의 값보다 커야한다.
+ *      - 노드의 추가 삭제에 시간이 걸린다.
+ *      - 검색(범위 검색)과 정렬에 유리하다
+ *      - 중복된 값을 저장하지 못한다.
+ */
+class TreeNode{
+    // TreeSet에 저장되는 객체가 Comparable을 구현하던가 아니면, TreeSet에게 Comparator를 제공해서 두 객체를 비교할 방법을 알려줘야 한다. 그렇지 않으면 TreeSet에 객체를 저장할 떄 예외가 발생한다.
+    TreeNode left; // 왼쪽 자식 노드
+    Object element; // 객체를 저장하기 위한 참조변수
+    TreeNode right; // 오른쪽 자식노드
+}
+
+/**
+ * 메서드  - 반환 - 설명
+ *   add : 지정된 객체 또는 컬렉션들을 넣는다.
+ *  first() : Object  :정렬된 순서에 첫번쨰 객체 반환
+ *  last() : Object : 정렬된 순서에 마지막 객체 반환
+ *  ceiling(Object o ): Object  :지정된 객체와 같은 객체 반환, 없으면 큰값중 가장 가까운 객체 반환, 없으면 null
+ *  floor(Object o ) : Object : 지정된 객체와 같은 객체 반환 없으면 자긍ㄴ 값중 가장 가까운 객체 반환 없으면 null
+ *  higher (Object o ) : Object : 지정된 객체중에서 큰값중 제일 가까운값 반환, 없으면 null
+ *  lower(Object o ) : Object : 지정된 객체중에서 작은값중 제일 가까운 값 반환, 없으면 null
+ *  subSet(Obejct formElement, Object toElement): SortedSet : fromelement부터 toElement까지의 객체들을 반환 toElement미포함
+ *  headSet(Object toElement): SortedSet 지정된 객체보다 작은 값의 객체들을 반환
+ *  tailSet(Object form Element): SortedSet : 지정된 객체보다 큰값의 객체들을 반환
+ */
+
+```
+
+---
+
+- ## Map
+
+  - ### HashMap
+```java
+
+public class map1 {
+
+    public static void main(String args[]){
+        HashMap map = new HashMap();
+        map.put("myID","1234");
+        map.put("asdf","1234");
+        map.put("asdf","1234");
+        map.put("myID2","1234");
+
+        Scanner s = new Scanner(System.in);
+        while(true){
+            System.out.println("id 와 password를 입력해주세요");
+            System.out.print("id : ");
+            String id = s.nextLine().trim();
+
+            System.out.println("password ");
+            String password = s.nextLine().trim();
+            System.out.println("");
+
+            if (!map.containsKey(id)) {
+                System.out.println("입력하신 id는 존재하지 않습니다." + " 다시 입력해 주세요");
+                continue;
+            }
+            else{
+                if(!map.get(id).equals(password)){
+                    System.out.println("비밀번호가 일치하지 않습니다.");
+                }
+                else{
+                    System.out.println("일치 ");
+                    break;
+                }
+            }
+        }
+
+
+    }
+}
+
+
+
+/**
+ * HashMap 메서드
+ *
+ * HashMap() : 객체를 생성
+ * contatinsKey(Object key) : HashMap에 지정된 키가 포함되어 있는지 알려준다(포함 되어있으면 True)
+ * contatinsValue(Object value) : HashMap에 지정된 값이 포함되어 있는지 알려준다(포함되어 있으면 True)
+ * Set entrySet() : HashMap에 저장된 키와 값을 엔트리(키와 값의 결합)의 형태로 Set에 저장해서 ㅏㅂㄴ환
+ * Object get(Object key) 지정된 키의 값을 반환 못찾으면 null반환
+ * Object getOrDefault(Obejct key, Object defaultValue) : 지정된 키와 값을 반환한다. 키를 못찾으면, 기본 값으로 지정된 객체를 반환
+ * boolean isEmpty() : HashMapl이 비어있는지 알려준다.
+ * Set keySet() : HashMAp에 저장된 모든 키가 저장된 Set을 반환
+ * Object put(Obejct key, Object value) 지정도니 키와 값을 HashMap에 저장
+ * Obeject replace(Object key, Object value) : 지정된 키의값을 지정된 객체로 대체
+ * boolean replact(Object key, Object oldValue,Object newValue) : 지정된 키와 객체가 모두 일치하는 경우에만 새로운 객체로 대체
+ * int size() : 저장된 요소의 개수를 반환환
+ * Collection values(): HashMap에 저장된 모든 값을 컬렉션의 형태로 반환.
+ */
+
+```
+
+- 해싱과 해시 함수
+  - 해싱이란 해시함수를 이용해서 데이터를 해시테이블에 저장하고 검색하는 기법을 말한다. 해시함수는 데이터가 저장되어있는 곳을 알려 주기 때문에 다량의 데이터 중에서도 원하는 데이터를 빠르게 찾을 수 있다.
+
+  - 해싱을 구현한 컬렉션 클래스로는 HashSet,HashMap,Hashtable등이 있다.
+
+  - 저장할 데이터의 키를 해시함수에 넣으면 배열의 한 요소를 얻게 되고, 다시 그 곳에 연결되어 있는 링크드 리스트에 저장하괴 된다.
+
+    - 검색 하고자 하는 값의 키로 해시함수를 호출한다.
+    - 해시함수의 계산 결과로 해당 값이 저장되어 있는 링크드 리스트를 찾는다.
+    - 링크드 리스트에서 검색한 키와 일치하는 데이터를 찾는다.
+  
+  - 해시함수가 서로 다른키에 대해서 중복도니 해시코드의 반환을 최소화해야 한다. 그래야 HashMap에서 빠른 검색시간을 얻을 수 있다.
+
+  - 해싱을 구현하는 과정에서 제일 중요한 것은 해시함수의 알고리즘이다.
+  - 새로운 클래스를 정의할 떄 equals()를 재정의오버라이딩해야 한다면, hashCode()도 같이 재정의해서 equals)의 결과가 true인 두 객체의 해시코드hashCode()의 결과값이 항상 같도록 해주어야 한다.
+
+    - equals()로 비교한 결과가 false이고 해시코드가 같은 경우는 같은 링크드 리스트에 저장된 서로 다른 두 데이터가 된다.
 
 --- 
 ## 제너릭(generic)
