@@ -793,14 +793,47 @@ public class map1 {
     - 링크드 리스트에서 검색한 키와 일치하는 데이터를 찾는다.
   
   - 해시함수가 서로 다른키에 대해서 중복도니 해시코드의 반환을 최소화해야 한다. 그래야 HashMap에서 빠른 검색시간을 얻을 수 있다.
+    - 배열은 배열의 크기가 커져도 원하는 요소가 몇 번째에 있는 지만 알면 빠르게 원하는 값을 찾을 수 있기 떄문에 해시코드 중복을 피하고 다른 해시코드값을 넣어 중복을 최소화하여 각각 배열에 넣어놔야 속도가 빠르다.
 
   - 해싱을 구현하는 과정에서 제일 중요한 것은 해시함수의 알고리즘이다.
   - 새로운 클래스를 정의할 떄 equals()를 재정의오버라이딩해야 한다면, hashCode()도 같이 재정의해서 equals)의 결과가 true인 두 객체의 해시코드hashCode()의 결과값이 항상 같도록 해주어야 한다.
 
     - equals()로 비교한 결과가 false이고 해시코드가 같은 경우는 같은 링크드 리스트에 저장된 서로 다른 두 데이터가 된다.
 
+  - ### TreeMap
+    - 검색 성능은 HashMap이 더 뛰어나므로 검색 할 경우에 HashMap사용
+    -  범위검색이나 정렬이 필요한 경우에 사용한다.
+
+  - entrySet()
+    ```java
+    map.entrySet() -> [A=4,B=5,C=6]  // 이런식으로 저장된다
+
+    ```
+
+  - ### 컬렉션 특징
+    - ArrayList
+      - 배열 기반, 데이터의 추가와 삭제에 불리, 순차적인 추가삭제는 제일빠름. 임의의 요소에 대한 접근성이 뛰어남
+    - LinkedList
+      - 연결기반, 데이터의 추가와 삭제에 유리, 임의의 요소에 대한 접근성이 좋지 않다.
+    - HashMap
+      - 배열과 연견이 결합된 형태, 추가 삭제,검색, 접근성이 모두 뛰어남
+      검색에는 최고 성능으 보인다.
+    - TreeMap
+      - 연결 기반, 정렬과 검색(특히 범위 검색)에 적합, 검색성능은 HashMap보다 떨어짐
+    - Stack 
+      - Vector를 상속받아 구현
+    - Queue 
+      - LinkedList가 Queue인터페이스를 구현
+    - Propertise
+      - Hashtable을 상속받아 구현
+    - HashSet
+      - HashMap을 이용해서 구현
+    - TreeSet 
+      - TreeMap을 이용해서 구현
+    - LinkedHashMap,LinkedHashSet
+      - HashMap,HashSet에 저장 순서유지기능을 추가
 --- 
-## 제너릭(generic)
+## 제네릭(generic)
 
 - 데이터 타입을 일반화한다는 것을 의미
 
@@ -811,6 +844,29 @@ public class map1 {
 1. 클래스나 메소드 내부에서 사용되는 객체의 타입 안정성을 높일 수 있다.
 2. 반환값에 대한 타입 변환 및 타입 검사에 들어가는 노력을 줄일 수 있다.
 ```
+- 생성
+  - 참조변수와 생성자에 대입된 타입(밴개변수화된 타입)이 일치해야 한다.
+     - 생성자에 타입을 지정을 안해도된다. 
+  - 타입 T가 Fruit인 경우 void add(fruit item)가 있다고 가정할 떄 Fruit의 자손들은 이 메서드의 매개변수가 될 수 있다.
+  ```java
+  Box<Fruit> fruitBox = new Box<Fruit>();
+  fruitBox.add(new Apple());
+
+  ```
+  - 제한된 클래스
+    - 제네릭 타입에 extends를 사용하면 특정 타입의 자손들만 대입할 수 있게 제한할 수 있다.
+    - 인터페이스를 구현해야 한다는 제약이 필요할 떄도 implermnet가 아니아
+    extends를 써야한다.
+  ```java
+  class FruitBox<T extends Fruit>{
+    ArrayList<T> list = new ArrayList<T>();
+  }
+
+
+  //인터페이스 제한
+  ineterface Eatable{}
+  class FruitBox<T extends Eatable>
+  ```
 
 - 사용예시
 
@@ -820,13 +876,32 @@ public class yushin<T>{
     T Food;
 }
 
-TestYushin<String> test = new TestYushin<>();
+yushin<String> test = new yushin<>();
 		String a = "좋아하는음식기록";
 		test.Food = a;
 		System.out.println("test.food ==> "+ test.Food);
 
 
 ```
+- ### 제한
+  - 모든 객체에 대해 동일하게 동작해야하는 static 멤버에 타입 변수 T를 사용할 수 없다.
+
+- ### 와일드 카드
+  - 제네릭 클래스의 객체를 메소드의 매개변수로 받을 때, 그 객체의 타입 변수를 제한하는 것을 말한다.
+  - 메소드를 만드는 개발자의 관점에서 메소드에서 사용 될 매개변수가 제네릭 클래스를 구현한 객체일떄, 그 제네릭 클래스 '타입 변수'를 제한 하는것이다.
+
+  -  방법
+    - <? extneds T> : 와일드 카드의 상한 제한, T와 그 자손들만 가능
+    - <? super T> : 와일드 카드의 하한 제한, T와 그 조상들만 가능
+    - <?> 제한 없음 모든타입이 가능
+  ```java
+
+  static Juice makeJuice(FruitBox<? extends Fruit> box){
+    
+  }
+  ```
+  
+
 --- 
 
 ## java.util.Optional <T> 클래스
