@@ -317,7 +317,10 @@
   public class innerEx1 {
       public static void main(String args[]){
       innerEx1 test1 = new innerEx1();
-      System.out.println("test1.outIv" + innerEx1.StaticInner.scv);
+      System.out.println("test1.outIv" + innerEx1.StaticInner.scv); // 0 
+      StaticInner test2 = new StaticInner();
+      System.out.println("test2 + " + test2.scv2 ); // 0 출력가능
+
       }
       private int outerIv = 0;
       static int outerCv= 0;
@@ -330,6 +333,8 @@
       static class StaticInner{
   //        int siv = outIv; 스태틱 클래스는 외부 클래스의 인스턴스 멤버에 접근할 수 없다.
           static int scv = outerCv;
+          int scv2 = outerCv;
+
       }
 
       void myMethod(){
@@ -346,6 +351,13 @@
       }
 
   }
+  ```
+- Static 클래스
+  - static 키워드를 이용하여 이너 클래스를 생성하면 상위 클래스와 분리를 해준다.
+  - 상위 클래스가 생성되지 않아도, 외부에서 지겆ㅂ 객체를 생성할 수 있다.
+  ```java
+
+
   ```
 
 
@@ -891,9 +903,9 @@ yushin<String> test = new yushin<>();
   - 메소드를 만드는 개발자의 관점에서 메소드에서 사용 될 매개변수가 제네릭 클래스를 구현한 객체일떄, 그 제네릭 클래스 '타입 변수'를 제한 하는것이다.
 
   -  방법
-    - <? extneds T> : 와일드 카드의 상한 제한, T와 그 자손들만 가능
-    - <? super T> : 와일드 카드의 하한 제한, T와 그 조상들만 가능
-    - <?> 제한 없음 모든타입이 가능
+      - <? extneds T> : 와일드 카드의 상한 제한, T와 그 자손들만 가능
+      - <? super T> : 와일드 카드의 하한 제한, T와 그 조상들만 가능
+      - <?> 제한 없음 모든타입이 가능
   ```java
 
   static Juice makeJuice(FruitBox<? extends Fruit> box){
@@ -901,8 +913,236 @@ yushin<String> test = new yushin<>();
   }
   ```
   
+- ### Enum(열거형)
+  - 서로 관련된 상수를 편리하게 선언하기 위한 것으로 여러 상수를 정의할 떄 사용하면 유용하다. 
+
+  - 정의하는 방법
+    ```java
+    enum 열거형이름 {상수명1, 상수명2}
+    ```
+  - 예시
+   ```java
+  public class enum_ex1 {
+      public static void main(String args[]){
+      Unit test1 = new Unit();
+      test1.init();
+      System.out.println("test.dir " + test1.dir);
+
+
+      }
+  }
+
+  class Unit{
+      int x,y;
+      enum Direction{EAST,SOUTH,WEST,NORTH}
+
+      Direction dir;
+      void init(){
+          dir = Direction.EAST;
+      }
+  }
+
+
+   ```
+
+  - 열거형 상수간 비교에는 ==를 사용할 수 있다. equals()가 아닌 '=='로 비교가 가능하다는 것은 그만큼 빠른 성능을 제공할 수 있다는 의미
+
+  -Enum클래스에 정의된 메서드
+  ```
+    - Class<E> getDeclaringClass() : 열거형의 Class 객체를 반환
+    - String name() : 열거형 상수의 이름을 문자열로 반환
+    - int ordinal() 열거형 상수가 정으된 순서를 반환한다.(0부터시작)
+    - T valueOf(Class<T> enumType,String name)
+  ```
+
+- ### 익명 클래스
+
+
+```java
+public class Anonymous_Class {
+    public static void main(String[] args) {
+
+        // 익명 클래스  - 무명의 어떠한 클래스가 부모클래스(Test)로 부터 상속을 받은 인스턴스 생성
+        // 이름이 없으므로 생성자를 선언 할 수도 없다.
+        // 자바에서는 함수를 일급객체로 취급하지 못하지만, 위에서와 같이 익명클래스를 사용하면 메서드 자체는 못넘기되 메서드를 감싼 익명클래스를 넘길 수는 있다.
+        Test t1 = new Test(){
+            public int num = 10;
+            public int getNum(){
+                return this.num;
+            }
+        };
+
+        Test t2 = new Test();
+
+        System.out.println("test1 " + t1.getNum()); //t1.num을 출력 10
+        System.out.println("test2 " + t2.getNum());
+    }
+}
+
+
+
+class Test {
+    private int num = 1 ;
+    public int getNum(){
+        return this.num;
+
+    }
+
+    public void setNum(int num){
+        this.num = num;
+    }
+}
+
+
+```
+
+- ### 익명 클래스를 활용하여 Enum클래스 만들기
+
+```java
+
+
+//익명 클래스를 활용하여 enum타입 만들어보기
+public class enum_class2 {
+    public static void main(String[] args) {   
+      MyTransportation t1 = Mytransportation.BUS;
+      System.out.println("t1.name"+  t1.name()+ t1.ordinal());
+
+    }
+}
+
+// enum 클래스
+abstract class MyEnum<T extends MyEnum<T>> implements Comparable<T> {
+    static int id=0;
+    int ordinal;
+    String name= "";
+
+    public int ordinal(){return ordinal;}
+
+
+    MyEnum(String name){
+        this.name = name;
+        ordinal = id++;
+    }
+    public int compareTo(T t){
+        return ordinal-t.ordinal;
+    }
+}
+
+abstract class MyTransportation extends MyEnum{
+
+    // 열거형 만들기 각각 열거형 상수에 추상메서드 구현
+    static final MyTransportation BUS = new MyTransportation("BUS",100) {
+        int fare(int distance){return distance * BASIC_FARE;}
+    };
+
+    static final MyTransportation TRAIN = new MyTransportation("TAXI",300) {
+        int fare(int distance){return distance * BASIC_FARE;}
+    };
+
+    
+
+    // 열거형에 추상메서드 생성
+    abstract int fare(int distance);
+
+    protected final int BASIC_FARE;
+
+    private MyTransportation(String name,int basicFare){
+        super(name);
+        BASIC_FARE = basicFare;
+    }
+
+    public String name(){return name;}
+    public String toString(){return name;}
+
+}
+
+
+
+```
+---
+ ## 어노테이션
+
+- 프로그램의 소스코드 안에 다른 프로그램을 위한 정보를 미리 약속된 형식으로 포함 시킨것.
+
+- 주석처럼 프로그래밍 언어에 영향을 미치지 않으면서도 다른 프로그램에게 유용한 정보를 제공할 수 있다
+
+```java
+@Test// 이 메서드가 테스트 대상임을 테스트 프로그램에게 알린다.
+public void method(){
+  
+}
+```
+
+- 오버라이딩할 때 메서드 앞에 @Override를 붙이면  알아내기 어려운 실수를 미연에 방지할 수 있다.
+
+- @Deprecated : 더 이상 사용되지 않는 필드나 매서드에 적용 (메서드나 필드가 다른것으로 대체 되었다는 의미를 준다.)
 
 --- 
+## 람다
+
+- 람다식: 메서드를 하나의 식으로 표현한 것
+- 메서드를 람다식으로 표현하면 메서드의 이름과 반환값이 없어지므로, 람다식을 익명 함수라고도 한다.
+```java
+int [] arr = new int[5];
+Arrays.setAll(arr,(i)->(int)(Math.random()*5)+1);
+
+//원래식
+int method(){
+  return (int)(Math.random()*5) +1;
+}
+```
+
+- 메서드의 매개변수로 전달되어지는 것이 가능하고, 메서드의 결과로 반환될 수도 있다.
+- 메서드와 함수의 차이
+  - 메서드 : 특정 클래스에 반드시 속해야 한다는 제약이있음 
+  - 함수는 클래스에 속하지 않아도됨
+
+
+
+```java
+
+public class Expreesion_class {
+    public static void main(String[] args) {
+
+        //1번
+        MyFunction f = (int a, int b) -> a>b? a:b;
+        int big = f.max(5,3);
+        System.out.println("f.max == "  + big);
+
+
+        /**
+         * sort(list, comparator을 람다식으로 표현하는방법)
+         *
+         */
+        List<String> list = Arrays.asList("a1","aaa","b2b2b2","c2c2c2");
+        Collections.sort(list,(s1,s2)-> s2.compareTo(s1));
+        System.out.println("람다식 적용list = " + list);
+
+        
+        Collections.sort(list, new Comparator<String>() {
+            @Override
+            public int compare(String s, String t1) {
+                return s.compareTo(t1);
+            }
+        });
+        System.out.println("sort 람다식 적용  x list " +list);
+
+
+    }
+}
+
+
+/**
+ * 하나의 메서드가 선언된 인터페이스를 정의해서 람다식을 다루는것을 함수형 인터페이스라고 한다.
+ * 오직 하나의 추상 메서드만 정의되어 있어야만 하는 제약이 있다.
+ * static메서드와 default 메서드의 개수에는 제약이 없다.
+ * @FunctionallInterface 붙이기
+ */
+interface MyFunction{
+    public abstract int max(int a, int b);
+}
+```
+---
 
 ## java.util.Optional <T> 클래스
 
