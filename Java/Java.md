@@ -2,6 +2,10 @@
 ## Java 복습 
 --- 
 
+- 배열의 단점
+  - 크기를 변경할 수 없다.
+  - 비순차적인 데이티의 추가 또는 삭제에 시간이 많이 걸린다.
+
 
 
 ## 메모리 구조
@@ -716,7 +720,7 @@ class TreeNode{
  *  first() : Object  :정렬된 순서에 첫번쨰 객체 반환
  *  last() : Object : 정렬된 순서에 마지막 객체 반환
  *  ceiling(Object o ): Object  :지정된 객체와 같은 객체 반환, 없으면 큰값중 가장 가까운 객체 반환, 없으면 null
- *  floor(Object o ) : Object : 지정된 객체와 같은 객체 반환 없으면 자긍ㄴ 값중 가장 가까운 객체 반환 없으면 null
+ *  floor(Object o ) : Object : 지정된 객체와 같은 객체 반환 없으면 작은 값중 가장 가까운 객체 반환 없으면 null
  *  higher (Object o ) : Object : 지정된 객체중에서 큰값중 제일 가까운값 반환, 없으면 null
  *  lower(Object o ) : Object : 지정된 객체중에서 작은값중 제일 가까운 값 반환, 없으면 null
  *  subSet(Obejct formElement, Object toElement): SortedSet : fromelement부터 toElement까지의 객체들을 반환 toElement미포함
@@ -779,7 +783,7 @@ public class map1 {
  * HashMap() : 객체를 생성
  * contatinsKey(Object key) : HashMap에 지정된 키가 포함되어 있는지 알려준다(포함 되어있으면 True)
  * contatinsValue(Object value) : HashMap에 지정된 값이 포함되어 있는지 알려준다(포함되어 있으면 True)
- * Set entrySet() : HashMap에 저장된 키와 값을 엔트리(키와 값의 결합)의 형태로 Set에 저장해서 ㅏㅂㄴ환
+ * Set entrySet() : HashMap에 저장된 키와 값을 엔트리(키와 값의 결합)의 형태로 Set에 저장해서 반환
  * Object get(Object key) 지정된 키의 값을 반환 못찾으면 null반환
  * Object getOrDefault(Obejct key, Object defaultValue) : 지정된 키와 값을 반환한다. 키를 못찾으면, 기본 값으로 지정된 객체를 반환
  * boolean isEmpty() : HashMapl이 비어있는지 알려준다.
@@ -823,6 +827,11 @@ public class map1 {
     ```
 
   - ### 컬렉션 특징
+    - ### 컬렉션 프레임웍에 속한 대부분의 컬렉션 클래스들은 이처럼 서로 변환이 가능한 생성자를 제공하므로 이를 이용하면 간단히 다른 컬렉션 클래스로 데이터를 옮길 수 있다.
+    ```java
+    Arraylist al = new ArrayList(1000);
+    LinkedList ll = new LinkedList(al);
+    ``` 
     - ArrayList
       - 배열 기반, 데이터의 추가와 삭제에 불리, 순차적인 추가삭제는 제일빠름. 임의의 요소에 대한 접근성이 뛰어남
     - LinkedList
