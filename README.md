@@ -130,3 +130,18 @@ git pull origin main
     - 임의의 테스트 클래스를 만들고 게터 세터 확인하기
 
 
+
+## Ec2
+
+- EBS 용량 꽉찼을 떄
+
+```
+df -h //용량 확인하기  /dev/xvda1 용량이 풀이였음
+
+aws 들어가서 용량 늘린 다음
+
+차례대로 실행하기
+sudo growpart /dev/xvda 1 //디스크 용량을 1번째 파티션으로 할당
+
+sudo resize2fs xvda1 // xvda1 (1번째 파티션 사이즈 조정)
+```

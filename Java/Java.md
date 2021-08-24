@@ -964,7 +964,7 @@ yushin<String> test = new yushin<>();
   ```
     - Class<E> getDeclaringClass() : 열거형의 Class 객체를 반환
     - String name() : 열거형 상수의 이름을 문자열로 반환
-    - int ordinal() 열거형 상수가 정으된 순서를 반환한다.(0부터시작)
+    - int ordinal() 열거형 상수가 정의된 순서를 반환한다.(0부터시작)
     - T valueOf(Class<T> enumType,String name)
   ```
 
@@ -1210,13 +1210,21 @@ int big = f.max(5,3);
 
 - Integger나 Double 클래스 처럼 T타입의 객체를 포장해 주는 래퍼 클래스 -> __모든 타입의 참조 변수를 저장할 수 있다.__
 
+- Optional.of 를 사용하면 객체가없을 경우  NPE가 터집니다.
+```java
+Optional<String> testString = Optinal.of("");
+// NPE 발생 
+
+```
+
 - Optional 객체를 사용하면 예상치 못한 NullPointerException 예외를 제공되는 메소드로 간단히 회피  __ofNullable() 메소드__
 
 
 ```java
 Optional<String> name = Optional.ofNullable("이름을 명시 안하면 비어있는 Optional객체를 반환 " )
-
 ```
+- Optiona.else()
+
 
 - 초기화
 ```java
@@ -1243,6 +1251,33 @@ String str1 = optVal.orElese("");  // null일 떄는 ""를 반환.
     List<String> names = stuStream.ma(Student::getName).collect(Collectors.toList());
 
     ```
+- Optional 중간처리
+  - filter 
+    - predicate값이 참이면 해당 필터를 통과시키면 거짓이면 통과시키지 않습니다.
+    ```java
+    Optional.of("True").filter( (val) -> "True".equals(val))orElse("NoData"); // True
+    Optional.of("False").filate((val) ->"True".equals(val))orElse("NoDate"); //Nodate
+    ```
+
+  - Map
+    - mapper 함수를 통해 입력값을 다른 값으로 변환하는 메서드
+    ```java
+    Integer test = Optional.of("1").map(Integer::valueOf).elseOf(NoSuchExcepiton::NEW);
+    ```
+
+- 최종연산
+  -  orElse
+      - 최종적으로 연산을 끝낸 후에도 옵셔널 객체가 비어있다면 기본값으로 제공할 객체를 지정합니다.
+      ```java
+      String result = Optional.ofNullable(null).orElse("default");
+      // result = default;
+      ```
+  - orElseThrow
+    - 최종적으로 연산을 끝낸 후에도 옵셔널 객체가 비어있다면 예외 공급자 함수를 통해 예뢰를 발생시킬 수 있습니다.
+    ```java
+    Optional.ofNullable(null).filter((val)-> "test".equals(val))orElseThrow(???Exception::NEW);
+    ```
+
 --- 
 ## 스트림
 
