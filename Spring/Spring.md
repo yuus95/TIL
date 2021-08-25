@@ -129,10 +129,10 @@ ApplicationContext ctx =new AnnotationConfigApplicationContext(AppCtx.class);
 
 ```
 
-- 객체를 생성하고 의존 객체를 주입하는 것은 스프링 컨테이너이므로 설정 클래스를 이용해서 컨테이너를 생성해야한다.
+- 객체를 생성하고 의존 객체를 주입하는 것은 스프링 컨테이너의 역할이므로  설정 클래스를 이용해서 컨테이너를 생성해야한다.
 
 
-- 컨테이너를 생성하면 getBean()메서드를 이용햇 사용할 객체를 구할 수 있다. 
+- 컨테이너를 생성하면 getBean()메서드를 이용해서 사용할 객체를 구할 수 있다. 
 
 ```java
 MemberRegisterService regSvc= ctx.getBean("memberRegSvc",MemberRegisterService.class);
@@ -325,7 +325,7 @@ Public class MemberRegisterService{
 - AOP(Aspect Oriented Programming)
   - 여러 객체에 공통으로 적용할 수 있는 기능을 분리해서 재사용성을 높여주는 프로그래밍 기법
 
-  - AOP는 핵심 기능과 공통 기능의 구현을 분리함으로써 핵심 기능을 구현한 코드의 수정 없이 공통 기능을 적용할 수 있께 만들어 준다.
+  - AOP는 핵심 기능과 공통 기능의 구현을 분리함으로써 핵심 기능을 구현한 코드의 수정 없이 공통 기능을 적용할 수 있게 만들어 준다.
 
   - 핵심 기능에 공통 기능을 삽입하는 방법
     - 1 컴파일 시점에 코드에 공통 기능을 삽입하는 방법
@@ -351,7 +351,7 @@ Public class MemberRegisterService{
 
     - Weaving : Advice를 핵심 로직 코드에 적용하는 것을 weaving이라고 한다
     
-    - Aspect 여러 객체에 공통으로 적용되는 기능을 Aspect라고 한다. ex) 트랜잭션이나 보안
+    - Aspect:여러 객체에 공통으로 적용되는 기능을 Aspect라고 한다. ex) 트랜잭션이나 보안
 
   </br>
   
