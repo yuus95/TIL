@@ -27,4 +27,17 @@
     - :w filename 을 입력하면 filename으로 saveas할 수 있습니다.(다른이름으로 저장)
 
 
-    
+
+
+## 패키지 관리
+
+- sudo : 관리자 모드를 의미
+
+- apt-get /etc/apt/source.list 인덱스 위치 패키지의 정보를 얻어옴
+
+- sudo apt-get update 인덱스 정보 업데이트
+- sudo apt-get upgrade 모두 새버전으로 업그레이드 
+
+- sudo apt-get install 패키지 이름
+
+- sudo apt-get remove 패키지 이름
