@@ -145,3 +145,13 @@ sudo growpart /dev/xvda 1 //디스크 용량을 1번째 파티션으로 할당
 
 sudo resize2fs xvda1 // xvda1 (1번째 파티션 사이즈 조정)
 ```
+
+
+- QueryDsl이랑 SpringData JPA사용할 때 조심해야하는점
+    ```
+    아마존 프리티어 에서는 QueryDsl과 SpringDataJPA을 사용한 프로젝트를 
+    Test하면 Ec2가 멈춘다.
+    테스트하지말기.. 
+    
+    - ec2 하나 날리면서 배웠다.
+    ```
