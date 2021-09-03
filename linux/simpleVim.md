@@ -41,3 +41,10 @@
 - sudo apt-get install 패키지 이름
 
 - sudo apt-get remove 패키지 이름
+
+
+## 디렉터리 이동
+
+- pwd : 현재 위치확인
+
+- ~ : 리눅스에서 홈 디렉토리로 이동하는 명령어
