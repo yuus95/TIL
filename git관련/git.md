@@ -23,3 +23,12 @@ git rm -r -cached .
 git add .
 git commit -m "cached delete"
 ```
+
+
+## git 충돌 해결하기
+
+- Pull Request했을 때 충돌
+```
+PR창에서 Resolve conflicts클릭
+충돌된 부분 수정하여 Commit merge 누르기
+```
