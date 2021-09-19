@@ -1305,3 +1305,20 @@ String str1 = optVal.orElese("");  // null일 떄는 ""를 반환.
 -  OOP(객체지향프로그래밍)에서 여러 메소드를 이어서 호출하는 방법
 - 메소드가 객체를 반환하여 여러 메소드를 순차적으로 선언할 수 있도록 한다.
 - 메소드 체이닝을 이용하면 코드가 간결해져 하나의 문장처럼 읽히게 할 수 있단느장점이 있고, 장기적으로 유지보수에 도움이 된다.
+
+
+
+## 문자열데이터를 Date 객체로 바꾸어 시간차 계산하기
+
+- 시간비교하기
+```java
+public 시간비교하기(){
+  LocalTime startTime = LocalTime.now();
+  LocalTime endTime = LocalTime.of(23.59.59);
+
+  startTime.isBefore(endTime);//True
+
+  startTime.isAfter(endtime); //false
+}
+
+```
