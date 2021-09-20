@@ -1310,6 +1310,8 @@ String str1 = optVal.orElese("");  // null일 떄는 ""를 반환.
 
 ## 문자열데이터를 Date 객체로 바꾸어 시간차 계산하기
 
+
+
 - 시간비교하기
 ```java
 public 시간비교하기(){
@@ -1320,5 +1322,22 @@ public 시간비교하기(){
 
   startTime.isAfter(endtime); //false
 }
+
+// https://choi-dev.tistory.com/80  참고하기
+```
+
+
+- 시간차이 구하기
+
+```java
+//"yyyy-mm-dd" 로 나올경우
+public test(String yymmdd){
+  
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    LocalDateTime date = LocalDateTime.parese(yymmdd,foramtter);
+    LocalDateTime now = LocalDateTime.of(LocalDate.parse(endDate, DateTimeFormatter.ISO_DATE), LocalTime.of(23,59,59));
+    ;
+    LocalDateTime returnTime = .truncatedTo(ChronoUnit.MINUTES);
 
 ```
