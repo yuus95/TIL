@@ -1311,6 +1311,15 @@ String str1 = optVal.orElese("");  // null일 떄는 ""를 반환.
 ## 문자열데이터를 Date 객체로 바꾸어 시간차 계산하기
 
 
+- LocalDate(날짜 정보만 필요할 떄 사용)
+  - LocalDate currentDate = LocalDate.now(); // 2021-09-21
+
+- LocalTime
+  - 로컬 시간 클래스로 시간 정보만 필요할 때 사용
+  - LocalTime currentTime = LocalTime.now(); // 19:41:21
+
+- LocalDateTime(날짜와 시간 정보 모두가 필요할 때 사용)
+  - LocalDateTime currentDateTiem= LocalDateTime.now();//2021-09-21T19:34:30.399
 
 - 시간비교하기
 ```java
