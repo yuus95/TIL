@@ -32,3 +32,12 @@ git commit -m "cached delete"
 PR창에서 Resolve conflicts클릭
 충돌된 부분 수정하여 Commit merge 누르기
 ```
+
+## git 협업 방법
+
+```
+1.협업할 프로젝트 선택
+2. 자신의 계정으로 fork
+3. git remote add origin 내 깃 포크 주소
+4. git remote add upstream 협업한프로젝트 깃 주소
+```
