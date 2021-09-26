@@ -60,3 +60,21 @@ rebase 한 브렌치의 log는 선형이다.
 Rebase는 보통 리모트 브랜치에 커밋을 깔끔하게 적용하고 싶을 때 사용한다.
 
 ```
+
+
+## git merge
+
+```
+git branch [개발 브런치]
+// 개발완료후
+
+git add .
+git commit 
+
+git checkout main
+git merge 개발 브런치
+git push origin main// 포크한 내 깃허브 프로젝트로 올라간다
+풀리퀘스트 요청하기
+
+
+```
