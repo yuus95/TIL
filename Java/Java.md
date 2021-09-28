@@ -6,6 +6,71 @@
   - 크기를 변경할 수 없다.
   - 비순차적인 데이티의 추가 또는 삭제에 시간이 많이 걸린다.
 
+## 자바의 데이터를 다루는 최소단위
+  - 1Byte
+  - Boolean은 1bit만 필요하지만 최소단위보다 작으므로 1byte가되어버림
+
+## 형변환
+
+- boolean을 제외한 나머지 7개의 기본형은 서로 형변환이 가능하다
+  - short와 ch는 서로 길이가 달라서 자동 형변환이 안된다.
+
+- 기본형과 참조형은 서로 형변환할 수 없다.
+
+- 서로 다른 타입의 변수간의 연산은 형변환을 하는 것이 원칙이지만, 값의 범위가 작은 타입에서 큰 타입으로의 형변환은 생략할 수 있다.
+
+## 연산자
+
+- 단항 연산자와 대입 연산자만 오른쪽에서 왼쪽의 순서로, 연산을 수행한다.
+```java
+x=y=3 
+// y =3 
+  // x = 3 
+  // 뒤에서부터 수행된다.
+```
+
+## Switch
+
+- switch문의 조건식 결과는 정수 또는 문자열이어야 한다.
+- case문의 값은 정수 상수만 가능하며, 중복되지 않아야 한다.
+
+```java
+Scanner sc = new Scanner(System.in);
+int month = scanner.nextInt();
+
+switch(month){
+  case 3:
+  case 4:
+  case 5:
+    System.out.println("봄");
+    break
+  case 6:
+  case 7:
+  case 8: 
+    System.out.println("여름");
+    break
+  case 9: case 10 : case 11:
+  System.out.println("가을");
+  case 12: case 1: case 2:
+  System.out.println("겨울");
+
+}
+
+```
+
+## 기본 자료형 & 참조형 변수  초기화
+```
+byte = 0 
+short = 0
+int = 0 
+long = 0 
+float = 0.0f
+
+double = 0.0d
+char = NULL
+boolean = false
+참조형 변수 = NULL
+```
 
 
 ## 메모리 구조
