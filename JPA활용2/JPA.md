@@ -271,3 +271,30 @@ spring:
   - ToOne관계는 페치 조인해도 페이징에 영향을 주지 않는다. 따라서 ToOne관계는 페치조인으로 쿼리 수를 줄이고 해결한 뒤, 나머지는 batch_fatch_size을 이용하자
 
 
+### Spring Data Jpa Pageable
+- PageRequest 객체를 이용하여 paging 및 sort기능을 사용할 수 있다.
+
+```java
+//BookRepository
+
+public interface BookRepository extends JpaRepository<BookEntity,id>{
+  Page<BookEntity> findAllByBookType(String bookType, Pageable pageable)
+}
+
+//BookService
+@Service
+@Requiredargsconstructor
+public BookService{
+  private BookRepository bookRepository;
+  public List<bookDto> getBookByType(String type){
+    PageRequest pageRequest = PageRequest.of(0,5,Sort.by("createAt").Descending;
+    List<bookListResponse> bookList = bookRepository.findByBookType(type,           pageRequest)
+            .stream()
+            .map(o-> bookListResponse.from(o))
+            .collect(Collectors.toList));
+
+  }
+}
+
+
+```
