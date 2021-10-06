@@ -72,6 +72,66 @@ boolean = false
 참조형 변수 = NULL
 ```
 
+## 기본형 매개변수와 참조형 매개변수 
+
+자바는 기본형 매개변수와 참조형 매개변수의 반환값을 달리한다.
+
+함수내에서 값은? 115
+기본값 참조후 height 100
+기본값 참조후 height 115
+자바에서는 메서드를 호출할 때 매개변수로 지정한 값을 메서드의 매개변수에 복사해서 넘겨준다.
+
+매개변수의 타입이 기본형(Primitive type)일 때는 기본형 값이 복사되겠지만,
+
+참조형(reference type)이면 인스턴스의 주소가 복사된다.
+
+메서드의 매개변수를 기본형으로 선언하면 단순히 저장된 값만 얻지만,
+
+참조형으로 선언하면 값이 저장된 곳의 주소를 알 수 있기 때문에 값을 읽어 오는 것은
+
+물론 값을 변경하는 것도 가능 하다.
+
+ 
+
+ 
+
+
+
+public class test33 {
+    public static void main(String[] args) {
+        Human human = new Human();
+        human.height= 100l;
+
+        // 기본값 참조
+        primitiveType(human.height);
+        System.out.println("기본값 참조후 height " + human.height);
+
+        referenceType(human);
+        System.out.println("기본값 참조후 height "+ human.height);
+    }
+
+    static class Human {
+        String name;
+        Long height;
+    }
+
+    static void primitiveType(Long x) {
+        x = x + 15;
+        System.out.println("함수내에서 값은? " + x);
+    }
+
+    static void referenceType(Human human) {
+        human.height += 15;
+    }
+
+
+결과
+```
+함수내에서 값은? 115
+기본값 참조후 height 100
+기본값 참조후 height 115
+ ```
+
 
 ## 메모리 구조
 
