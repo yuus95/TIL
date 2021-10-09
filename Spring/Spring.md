@@ -415,9 +415,11 @@ Public class MemberRegisterService{
       ex) proceed()메소드를 실행하면 주요기능 실행 
     - execution 명시자 표현식 : Advice를 적용할 메서드를 지정할 떄 사용
     execution(수식어 패턴? 리턴타입패턴 클래스이름 패턴?메서드이름패턴(파라미터패턴))
-      - 클래스..(.. : 하위 클래스을 의미)
-      - * 모든값
-      - 매개변수 .. : 0개이상
+      ```
+        - 클래스..(.. : 하위 클래스을 의미)
+        - * 모든값
+        - 매개변수 .. : 0개이상
+      ```
     - Advice 적용순서
       - @Aspoect 어노테이션 밑에 @Order옵션추가하기
 
@@ -651,29 +653,3 @@ public class HelloController{
   - 확장성과 재사용성 그리고 중복 코드의 제거를 하기위해서 분리한다
 
   - 출처 : https://devlog-wjdrbs96.tistory.com/209
-
-
-
-
-## log4j2
-
-- 로그는 소프트웨어의 이벤트를 기록하는 것으로써, 소프트웨어의 동작상태를 파악하고 문제가 발생했을 때 이 동작 파악을 통해서 소프트웨어의 문제를 찾아내고 해결하기 위해 디자인
-
-
-- log4j2란
-  - logback처럼 필터링 기능과 자동 리로딩을 지원한다, logback과의 가장 큰 차이는 Multi Thread환경에서 비동기 로거의 경우 다른 로깅 프레임워크보다 처리량이 훨신 많고, 대기 시간이 훨씬 짧다. 또한 Java8 부터 도입된 람다식을 지원하고, Lazy Evalutation을 지원한다.
-
-
-  
-
-- log4j2 속성
-  - Appenders 날짜마다 체크해주는 속성 유심히봐야하는부분
-  - 로그 메세지를 특정 위치에 전달하는 역할을 가진다.
-  ```java
-  Appenders:
-    Console:
-      name: Console
-      target:SYSTEM_OUT
-      PatternLayOut:
-        patter: "%d{yyyy-Mm-dd HH:mm:ss.SSS} 
-  ```
