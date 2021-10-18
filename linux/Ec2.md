@@ -24,3 +24,21 @@ sudo yum install git
 git --version
 
 ```
+
+
+## EC2 배포
+
+```java
+mkdir git
+
+git clone [프로젝트주소]
+
+chmod [권한] gradlew
+
+./gradlew build
+
+cd build/libs
+
+java -jar jar파일명
+
+```
