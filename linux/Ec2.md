@@ -42,3 +42,13 @@ cd build/libs
 java -jar jar파일명
 
 ```
+
+## Winscp FTP서버 오류 났을 경우
+
+- Linux일 경우
+```java
+// -R은 하위 디렉토리까지 소유권 변경
+chown -R ec2-user:ec2-user [폴더명]
+
+
+```
