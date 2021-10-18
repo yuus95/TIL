@@ -49,6 +49,4 @@ java -jar jar파일명
 ```java
 // -R은 하위 디렉토리까지 소유권 변경
 chown -R ec2-user:ec2-user [폴더명]
-
-
 ```
