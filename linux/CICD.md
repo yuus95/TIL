@@ -64,7 +64,13 @@ notifications:
 
 ```
 
+## 터미널 Travis 로그인
 
+```bash
+# 1.Ruby설치
+# 2. travis 설치
+gem install travis
+# 3. travis login
+travis login --com --github-token [토큰]
 
-
-
+```
