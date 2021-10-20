@@ -73,4 +73,35 @@ gem install travis
 # 3. travis login
 travis login --com --github-token [토큰]
 
+
+# 관련된 오류
+Please try re-syncing your user data at https://travis-ci.org/account/preferences and try logging in via travis-ci.org
+```
+
+
+##  Travis 파일 암호화 오류
+
+- Window에서 파일을 암호화 할 경우 오류가 생긴다 Mac이나 linux에서 암호화를 해야 한다
+
+
+### 1. linux ruby설치
+
+```bash
+# 1. 기본버전 2.0 루비 설치하기
+sudo yum install ruby
+
+# 2. 루비 빌드 도구에 필요한 종속성 설치하기
+sudo yum install git-core zlib zlib-devel gcc-c++ patch readline readline-devel libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison curl sqlite-devel
+
+# 3. rbenv 및 ruby-build설치하기
+# with curl
+curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash
+
+
+# ruby 버전 설치
+rbenv install 2.7.4
+rbenv global 2.7.4
+
+# ruby 버전 확인하기
+ruby -v
 ```
