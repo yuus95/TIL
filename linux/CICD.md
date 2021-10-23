@@ -105,3 +105,14 @@ rbenv global 2.7.4
 # ruby 버전 확인하기
 ruby -v
 ```
+
+
+## 오류
+
+```bash
+application-dev.yml.enc: No such file or directory
+
+>> enc 파일을 Resource폴더에 넣지말고
+bulild.gradle과 같은 프로젝트 맨처음 디렉토리에 넣는다.
+
+```
