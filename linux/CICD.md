@@ -116,3 +116,15 @@ application-dev.yml.enc: No such file or directory
 bulild.gradle과 같은 프로젝트 맨처음 디렉토리에 넣는다.
 
 ```
+
+
+## Amazon S3
+```bash
+"아마존 웹 서비스에서 제공하는 온라인 스토리지 웹 서비스이다. s3가 의미하는 것은 Simple Storage Service의 각 단어의 맨 앞 글자 s3개를 의미"
+```
+
+- 사용하는 이유
+```bash
+Travis 서버에서 생성된 jar파일을 S3에 전달해야 한다. 이유는 실제 배포는 AWS의 CodeDeploy를 통해 이루어진다. 하지만 이런 CodeDeploy는 파일을 저장할 수 있는 기능을 가지고 있지 않다. 그렇기 때문에 배포에 필요한 파일을 별도 보관할 수 있는 공간이 필요한데 그것이 바로 S3이다.
+```
+
