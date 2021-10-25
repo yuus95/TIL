@@ -213,3 +213,44 @@ after(long mills)
 desciption
 >> 실패한 경우 나올 문구 
 ```
+
+
+## BDD란?
+
+```bash
+TDD(Test Driven Development)는 "테스트"를 기준으로 하는 개발 방법론입니다.
+BDD(Behavior Driven Development)는 "행동"을 기준으로 하는 개발 방법론입니다. TDD를 참고
+```
+
+
+- 구조
+
+```bash
+#Given 
+>> 초기 context값
+
+#When
+>> 테스트 하려는 조건
+
+#Then
+>> 테스트 결과
+```
+
+- 예시
+
+```java
+@Test
+public void TestCode(){
+    //given - 초기 설정값 
+    // when - > given(stub을 할 때 when 대신 given을 사용한다.)
+    given(memberTestService.getMember()).thenReturn(member);
+
+    //when - 테스트 하려는 조건
+    memberTestService.getMember();
+
+    //Then
+    //verify 검증
+    then(memberTestService).getMember();
+
+}
+```
