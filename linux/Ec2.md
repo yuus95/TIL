@@ -54,7 +54,6 @@ chmod [권한] gradlew
 cd build/libs
 
 java -jar jar파일명
-
 ```
 
 ## Winscp FTP서버 오류 났을 경우
