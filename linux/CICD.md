@@ -110,11 +110,31 @@ ruby -v
 ## 오류
 
 ```bash
+#오류 1
 application-dev.yml.enc: No such file or directory
 
 >> enc 파일을 Resource폴더에 넣지말고
 bulild.gradle과 같은 프로젝트 맨처음 디렉토리에 넣는다.
 
+
+# 오류2
+The overall deployment failed because too many individual instances failed deployment, too few healthy instances are available for deployment, or some instances in your deployment group are experiencing problems.
+>> 오타 오류
+
+>> 해결방법
+/var/log/aws/codedeploy-agent # 이동
+vi codedeploy-agent.log #입력
+vim 창에서 G 입력 # 맨끝에 오류 확인
+
+#오류 3
+2021-10-28 14:54:15 ERROR [codedeploy-agent(3399)]: InstanceAgent::Plugins::CodeDeployPlugin::CommandPoller: Error during perform: InstanceAgent::Plugins::CodeDeployPlugin::ApplicationSpecification::AppSpecValidationException - The deployment failed because the application specification file specifies only a source file ({"destination"=>"/home/ec2-user/app/zip/", "overwrite"=>true}). Add the name of the destination file to the files section of the AppSpec file, and then try again. - /opt/codedeploy-agent/lib/instance_agent/plugins/codedeploy/application_specification/file_info.rb:13:in `initialize'
+
+>> "appspec 오타로 인한 오류 "
+
+
+# 오류 4 
+Travis 암호화파일은 root 폴더 그대로 복호화 시킨다.
+배포스크립트를 활용하여 복호화한 yml파일을  resources로 옮겨줘야한다.
 ```
 
 
