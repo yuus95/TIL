@@ -15,7 +15,7 @@ git checkout -b kys-dev // 신규 개발 브랜치 생성
 
 //기능, 도메인 단위로 add , commit 하기!
 
-// ex) 멤버도메인를 다 만들었을 경우
+// ex) 멤버도메인을 다 만들었을 경우
 git add .
 git commimt - m  " 멤버도메인 구현"
 
