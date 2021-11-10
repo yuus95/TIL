@@ -186,3 +186,18 @@ function HelloChild({name,color,isSpecial}){
 
 
 ```
+
+
+## useState
+
+```javascript
+// useState 넣어주기
+import React,{useState}  from 'react';
+
+// 초기값 부분에 숫자 넣어주기 
+const [num,setNum] = useState({초기값})
+
+//num 현재 상태 값 변수
+//setNum  상태 값 갱신을 위한 Setter함수
+
+```
