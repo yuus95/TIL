@@ -155,3 +155,34 @@ npx create-react-app my-app
 
 
 
+## 삼항연산자
+
+```javascript
+//메인
+function App() {
+  return (
+    <Wrapper>
+    <Hello />
+        <HelloChild name='react' color = 'red' isSpecial={true}/>
+        <HelloChild />
+    </Wrapper>
+
+  );
+}
+
+//HelloChild
+function HelloChild({name,color,isSpecial}){
+    return (
+        <>
+        <b>{isSpecial ? '트루일경우' : '트루가 아닌경우' }</b>
+        <div style={{color}}>
+            {name};
+        </div>
+        </>
+
+
+    )
+}
+
+
+```
