@@ -30,7 +30,7 @@ Spring Cloud Config Server는 외부 구성(이름-값 쌍 또는 이와 동등�
 
 ### Spriong Cloud Config
 - 임의의 Git Repository 만들고 간단한 yml파일 만들기
-   ![cloudConfig](./기타/cloudConfig/cloudConfig.png)
+   ![cloudConfig](./cloudConfig.png)
 
 
 ### Cloud Server만들기
