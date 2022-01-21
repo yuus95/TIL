@@ -14,7 +14,8 @@ introspect 반성하다
 for everything else. 다른 모든 것들에 대해 
 fetch 가져오다
 parse 구문 분석하다
-the same 동일하다clause: 조항
+the same 동일하다
+clause: 조항
 어플리케이션 로그를 파일로그로 뺴야한다.
 internal : 내부의 
 underlying: 근본적인

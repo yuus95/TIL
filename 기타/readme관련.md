@@ -9,3 +9,7 @@
 
 ## ReadMe에는 프로그램이 실행되기 위한 전제 조건 넣기
 - 전제 조건외에 설명할 내용이 있다면 따로 문서 만들어서 관리하기
+
+##  Componet Configuration
+- Componet: 개발자가 직접작성한 클래스를 bean으로 등록할 때 사용
+- Configuration: 외부 클래스 또는 내부 클래스를 bean으로 등록할 경우 사용한다.
