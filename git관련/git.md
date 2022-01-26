@@ -77,13 +77,18 @@ git branch [개발 브런치]
 // 개발완료후
 
 git add .
-git commit 
+git commit -m "메세지"
 
 git checkout main
 git merge 개발 브런치
 git push origin main// 포크한 내 깃허브 프로젝트로 올라간다
 풀리퀘스트 요청하기
 
+```
 
+## git branch -v 
+
+```
+git branch -v // 각 브런치마다 마지막 커밋메세지를 확인할 수 있다. 
 ```
 
