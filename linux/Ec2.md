@@ -73,3 +73,22 @@ java -jar jar파일명
 // -R은 하위 디렉토리까지 소유권 변경
 chown -R ec2-user:ec2-user [폴더명]
 ```
+
+
+## Mac에서 Ec2들어가기
+- 1회성
+
+```bash
+ssh -i {pem키 위치 /Users/Yushin/~.pem} {ec2-user@ec2아이피 ec2-user@192.168.0.1}
+```
+
+- 편리하게 config파일에 설정하여 쉽게 접속하기
+```bash
+cp /Users/Yushin/~.pem ~/.ssh/
+vim ~/.ssh/config
+
+Host {호스트네임 ec2-yushin}
+    HostName {ec2ip 192.168.0.1}}
+    User ec2-user
+    IdentityFile: ~/.ssh/{pem키이름}
+```
