@@ -4,9 +4,9 @@
 ```
 ## sound 설치
 yay -S pulseaudio-alsa
-  sudo pacman -Sy pa-applet
-    sudo pacman -Sy pavucontrol
-    sudo pacman -Sy pavucontrol
+sudo pacman -Sy pa-applet
+sudo pacman -Sy pavucontrol
+sudo pacman -Sy pavucontrol
 
 ## 모니터연결하기
 sudo mhwd -a pci nofree 0300 //nvidea driver설치
@@ -25,6 +25,5 @@ sudo usermod -aG docker $USER
 
 ## git 설치 
 yay -S git 
-
 
 ```
