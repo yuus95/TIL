@@ -16,3 +16,43 @@ Redis provides data structures such as strings, hashes, lists, sets, sorted sets
     - 다른 인메모리 디비들과의 다르게 다양한 자료구조를 지원한다.
     
 
+- 파일설정- 1 (yml,build.gradle)
+
+```
+//build.gradle
+implementation ("org.springframework.boot:spring-boot-starter-data-redis")
+
+
+//yml 
+spring:
+  redis:
+    host: localhost
+    port: 6370
+```
+
+- 파일설정 - redisConfig파일
+```
+@Configuration
+@EnableRedisRepositories
+class RedisConfig {
+    @Value("\${spring.redis.host}")
+    private val redisHost: String? = null
+
+    @Value("\${spring.redis.port}")
+    private val redisPort = 0
+
+    @Bean
+    fun redisConnectionFactory(): RedisConnectionFactory? {
+        println("redisPort = $redisPort")
+        return LettuceConnectionFactory(redisHost!!, redisPort)
+    }
+
+    @Bean
+    fun redisTemplate(): RedisTemplate<*, *>? {
+        val redisTemplate = RedisTemplate<ByteArray, ByteArray>()
+        redisTemplate.setConnectionFactory(redisConnectionFactory()!!)
+        return redisTemplate
+    }
+
+}
+```
