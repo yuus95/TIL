@@ -1,5 +1,33 @@
-# HTTP 상태코드
+# HTTP 
 
+## HTTP1.1
+
+- http1.1
+	- Connection 한 개당 하나의 요청을 처리하도록 설계됨
+	- HOL(Head Of Line)Blocking이 발생할 수 있다.
+	- RTT(ROUNd Trip Time) 증가
+        - 패킷 왕복 시간
+	- 무거운 Header구조 
+		- 중복 헤더값 전송
+
+
+
+- http2 
+    - 목적
+        - HTTP/2의 주요 목표는 전체 요청을 통해 지연 시간을 줄이고, 응답 다중화를 지원하며, HTTP 헤더 필드의 효율적 압축을 통해 프로토콜 오버헤드를 최소화하고, 요청 우선순위 지정을 추가하며, 서버 푸시를 지원하는 것입니다. 
+	- Multiplexed Streams
+        - 한 커넥션으로 동시에 여러 메세지를 받을 수 있다.
+	- Stream Prioritization
+        - 요청에 의존성을 부여할 수 있다. 
+        - 파일마다 우선권을 줄 수 있다.
+	- Server Push
+        - 클라이언트가 요청하지 않은 특정파일들(css,Javscript,font)미래에 필요할 파일들을 서버가 먼저 보내놓은다. 
+	- Header Compression
+		- 헤더 중복으로 보낼 경우 Static/Dynamic Header Table개념을 이용하여 중복 검출
+
+
+
+# HTTP 상태코드
 ## 1XX: Information responses
 - 상태 코드가 '1'로 시작하는 경우는 서버가 요청을 받았으며, 서버에 연결된 클라이언트는 작업을 계속 진행하라는 의미입니다.<br> 해당 코드는 HTTP 1.0에서 지원되지 않습니다.
 ```bash
