@@ -70,7 +70,6 @@
  #  도커 이미지 받기
 docker pull {옵션} {imageName}:{tag- 버전을뜻함}
  -> ex) docekr pull mysql:5.7
-
 # 로컬에 있는 도커 이미지확인
 docker images
 
