@@ -670,6 +670,24 @@ class Singleton{
   - RuntimeException 클래스들 : 프로그래머의 실수로 발생하는 예외
     - unchecked예외라고불림  
 
+```java
+// RunTimeException 상속받아서 확장시키기
+
+@Getter
+public class BusinessException extends RuntimeException {
+
+    public BusinessException(ErrorCode errorCode) {
+        super(errorCode.getMessage());
+    }
+
+    public BusinessException(String errorMessage) {
+        super(errorMessage);
+    }
+}
+
+
+```
+
 - 모든 예외 클래스는 Exception 클래스의 자손이므로 catch블럭의 괄호에 Exception 클래스 타입의 참조 변수를 선언해 놓으면 어떤 종류의 예외가 발생하더라도 이 catch블럭에 의해서 처리된다.
 
 - 예외가 발생했을 떄 생성되는 예외 클래스의 인스턴스에는 발생한 예외에 대한 정보가 담겨 있으며, getMessage()와 printStackTrace()를 통해서 얻을 수 있다.
