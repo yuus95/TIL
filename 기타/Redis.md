@@ -1,8 +1,30 @@
+## What is in-memory?
+
+```
+In-memory databases are purpose-built databases that rely primarily on memory 
+for data storage, in contrast to databases that store data on disk or SSDs.
+In-memory data stores are designed to enable minimal response times by eliminating 
+the need to access disks. Because all data is stored and managed exclusively 
+in main memory, in-memory databases risk losing data upon a process or server failure. 
+In-memory databases can persist data on
+disks by storing each operation in a log or by taking snapshots.
+
+In-memory databases are ideal for applications that require microsecond 
+response times or have large spikes in traffic such as gaming leaderboards,
+ session stores, and real-time analytics.
+
+요약: 디스크에 데이터를 저장하는 것이 아니라 메모리에 저장해서 좀 더 빠르게 데이터를 가져올 수 있다.
+```
+
 ## Redis
+
+- 쓰이는 곳
+  - Real-Tie biddign
+  - Caching
 
 ```bash
 # https://redis.io/
-Redis is an open source (BSD licensed), in-memory data structure store, used as a database, cache, and message broker
+Redis is an open source (BSD licenㅎsed), in-memory data structure store, used as a database, cache, and message broker
 
 Redis provides data structures such as strings, hashes, lists, sets, sorted sets with range queries, bitmaps, hyperloglogs, geospatial indexes, and streams.
 
@@ -56,3 +78,6 @@ class RedisConfig {
 
 }
 ```
+
+
+
