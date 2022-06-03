@@ -16,6 +16,10 @@ response times or have large spikes in traffic such as gaming leaderboards,
 요약: 디스크에 데이터를 저장하는 것이 아니라 메모리에 저장해서 좀 더 빠르게 데이터를 가져올 수 있다.
 ```
 
+## 캐시메모리
+- 참조지역성
+  - 동일한 값 또는 해당 값에 관계된 스토리지 우치기ㅏ 자주 엑세스 되는 특성
+
 ## Redis
 
 - 쓰이는 곳
