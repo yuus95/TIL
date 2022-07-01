@@ -27,3 +27,10 @@ testClass.addEventListener('click',function(){
     console.log(testClass.classList)
 })
 ```
+
+
+- padStart(String.padStart)
+    - 글자의 형식을 맞춰준다(prefix를 추가해주는기능)
+    ```
+    "1".padStart(2,"0") --> 01로 변환된다/
+    ```
