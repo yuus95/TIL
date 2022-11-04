@@ -19,5 +19,4 @@
         FileInputStream fileInputStream = new FileInputStream(path);
         return new MockMultipartFile(fileName, fileName + "." + contentType, contentType, fileInputStream);
     }
-
 ```
