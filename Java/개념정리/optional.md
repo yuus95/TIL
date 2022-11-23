@@ -9,4 +9,4 @@ Mockito.when(000mapper.fetchDto()).thenReturn(dto);
 
 // 비즈니스로직
 000Dto dto = mapper.fetchDto().orElseThrow( () -> BusinessException(000));
-```
+``` 
