@@ -12,3 +12,15 @@
     4. 테스트 실행
     5. 프로덕션 시스템에 배포
     ```
+
+
+-  에러
+
+```
+it has already been locked by this process
+```
+- 해결방법
+```
+ps -ef | grep gradle //gradle 프로세스 번호 찾기
+kill {pid번호}
+```
