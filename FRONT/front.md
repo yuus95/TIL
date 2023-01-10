@@ -39,8 +39,16 @@ testClass.addEventListener('click',function(){
 
 ##### INPUT  RADIO
 
-input 태그에서 type 속성이 RADIO일 경우 name 속성이 같은 이름들의 input들 중에서 하나를 선택할 수 있다. 
+`input 태그에서 type 속성이 RADIO일 경우 name 속성이 같은 이름들의 input들 중에서 하나를 선택할 수 있다. `
 
+- 개념 
+```
+여러 개의 항목 중에서 하나만 선택하도록 하는 동그란 버튼을 라디오 버튼이라고 한다.
+라디오 버튼은 input 태그로 만든다.
+```
+
+
+- 테스트 코드 
 ```
 <div class = "teest">
     <div id = "01">

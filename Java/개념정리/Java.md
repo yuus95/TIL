@@ -791,6 +791,54 @@ public class BusinessException extends RuntimeException {
 
   ```
 
+### 예외 순서
+
+`try-catch`문에서 호출한 메소드가 예외를 발생시킬 경우 메소드의 예외 발생 로직이 먼저 발생하고 `try-catch`문에 에러가 호출된다.  <br/>
+이 때 호출되는 에러로그는 catch문에 있는 에러만 호출된다. 하지만 메소드에 에러를 반환하는 로직에 다른 메서드가 있을 경우 행위는 실행된다.
+
+```
+ @Test
+    public void aTEst(){
+        B b = new B();
+        A a = new A(b);
+
+        a.testTdd(); 
+      // B의 print문 호출 (1)
+      // B 캐치문 반환 (2)
+      // A의 캐치문 Println()
+      /// A Exception 반환 -> 최종적으로 에러는 이부분만 반환
+    }
+
+
+    class A {
+        B b;
+
+        public A(B b){
+            this.b = b;
+        }
+
+        public void testTdd() {
+            try {
+                b.tdd();
+            } catch (Exception e) {
+                System.out.println("여기가 2번째");
+                throw new Exception("222");
+            }
+        }
+    }
+
+    class B {
+        public void tdd() {
+            System.out.println("testset");
+            int a = 0;
+            if (a == 0) {
+                System.out.println("여기가 첫번 째");
+                throw new Exception("111);
+            }
+        }
+    }
+```
+
 ---
 ## 추상 클래스 
 
