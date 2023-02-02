@@ -34,3 +34,35 @@ testClass.addEventListener('click',function(){
     ```
     "1".padStart(2,"0") --> 01로 변환된다/
     ```
+
+
+
+##### INPUT  RADIO
+
+`input 태그에서 type 속성이 RADIO일 경우 name 속성이 같은 이름들의 input들 중에서 하나를 선택할 수 있다. `
+
+- 개념 
+```
+여러 개의 항목 중에서 하나만 선택하도록 하는 동그란 버튼을 라디오 버튼이라고 한다.
+라디오 버튼은 input 태그로 만든다.
+```
+
+
+- 테스트 코드 
+```
+<div class = "teest">
+    <div id = "01">
+        <input type = "RADIO" name = "test">
+        <label> 1번 선택 </label>
+    </div>
+    <div id = "02">
+        <input type = "RADIO" name ="test"/>
+        <label> 2번 선택 </label>
+    </div>
+    <div id = "03">
+        <input type = "RADIO" name ="test" />
+        <label> 3번 선택 </label>
+    </diiv>
+</div>
+```
+s
