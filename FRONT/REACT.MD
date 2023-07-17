@@ -130,9 +130,25 @@ myFunc();
 # Node.js 설치
 # Yarn 설치
 
+lite-server : node.js 기반의 경량 웹서버
+
+npx 란? 
+- 모듈을 로컬에 저장하지 않고 매번 최신 파일만 임시로 가져와서 설치한다.
+
+필수 스크립트
+- react, react-dom, babel
 npx create-react-app my-app
 ```
 
+## 가상돔이란?
+- 하나의 패턴
+- 해당 패턴을 이용하면 여러 환경에서 보여줄 수 있다. (ios, aos, 등등)
+
+
+## element vs Realt element
+- 일반 elment : DOM 객체 (요청할 때 마다 DOM자체를 반환)
+- React Element: JS 객체, 리액트의 최소의 단위  (렌더링 하는 환경에 따라 여러 곳에서 사용할 수 있다.)
+  - React -> React dom (리액트 Element를 받아서 가상돔을 만든다.)
 
 ## JSX 문법
 
