@@ -560,3 +560,27 @@ where 사원번호 between 1 and 10
     FROM 사원
     WHERE YEAR(입사일자) BETWEEN '1994' and  '2000'
     ```
+
+
+- 메인 테이블에 계속 의존하는 나쁜 SQL문
+    - 해당 쿼리
+    ```SQL
+    SELECT 사원.사원번호, 사원.이름, 사원.성
+      FROM 사원
+    WHERE 사원번호 > 45000
+    AND (SELECT MAX(연봉) FROM 급여 WHERE 사원번호 = 사원.사원번호) > 100000;
+
+    -- 해당 쿼리의 실행계획에서는 중첩 쿼리에서 `select type` 이 DEPENDENT SUBQUERY 가 일어난다.
+    -- 실행계획에서 해당 타입이 나오면 튜닝을 할 생각을 해야한다. 왠만하면 조인을 이용한 것이 더빠르다.
+    ```
+
+    - 튜닝 쿼리
+    ```SQL 
+    SELECT 사원.사원번호, 사원.이름, 사원.성
+      FROM 사원
+      INNER JOIN 급여
+              ON 급여.사원번호 = 사원.사원번호
+    WHERE 사원.사원번호 > 45000
+    GROUP BY 사원.사원번호
+    having MAX(급여.연봉) > 100000;
+    ```
