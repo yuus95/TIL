@@ -609,3 +609,117 @@ where 사원번호 between 1 and 10
     FROM 사원
     WHERE exists(SELECT 1 FROM 사원출입기록 기록 WHERE 기록.출입문 = 'A' AND 기록.사원번호 = 사원.사원번호)
     ```
+
+
+## 5장 악성 SQL 튜닝으로 전문가 되기
+
+
+### 처음부터 모든 데이터를 가져오는 나쁜 SQL문
+
+```
+사원들의 평균연봉과 최고연봉, 최저연봉을 구하는 쿼리
+```
+
+#### 악성 쿼리
+- 해당 쿼리는 100명의 사원의 연봉관련된 정보를 집계하는 쿼리이지만 연봉관련된 정보를 가져올땐 모든 데이터를 가져와서 집계처리를 하고 있다. 
+```SQL
+explain
+SELECT 사원.사원번호,
+       급여.평균연봉,
+       급여.최고연봉,
+       급여.최저연봉
+FROM
+    사원,
+    (SELECT 사원번호,
+            ROUND(AVG(연봉), 0) AS 평균연봉,
+            ROUND(MAX(연봉), 0) AS 최고연봉,
+            ROUND(MIN(연봉), 0) AS 최저연봉
+     FROM 급여
+     GROUP BY 사원번호) 급여
+WHERE 사원.사원번호 = 급여.사원번호
+AND 사원.사원번호 BETWEEN 10001 AND 10100
+```
+
+#### 개선 쿼리
+```SQL
+explain
+SELECT 사원.사원번호,
+       (SELECT ROUND(AVG(연봉), 0) FROM 급여 where 급여.사원번호 = 사원.사원번호) AS 평균,
+       (SELECT ROUND(MAX(연봉), 0) FROM 급여 where 급여.사원번호 = 사원.사원번호) AS 최대,
+       (SELECT ROUND(MIN(연봉), 0) FROM 급여 where 급여.사원번호 = 사원.사원번호) AS 최소
+FROM 사원
+WHERE 사원.사원번호 BETWEEN 10001 AND 10100;
+```
+
+
+### 비효율적인 페이징을 수행하는 나쁜 SQL문
+
+```
+사원번호가 10001번부터 50000번 사이의 해당 데이ㅓ들을 사우너번호 기준으로 그루핑한 뒤
+연봉 합계 기준으로 내림차순 정렬
+```
+
+- 악성 쿼리
+    - 전체 데이터를 가져온 뒤 마지막으로 10건의 데이터만 가져온다.
+```SQL
+explain
+SELECT 사원.사원번호, 사원.이름, 사원.성, 사원.입사일자
+FROM 사원,
+     급여
+WHERE 사원.사원번호  = 급여.사원번호
+AND 사원.사원번호 BETWEEN 10001 AND 50000
+GROUP BY 사원.사원번호
+ORDER BY SUM(급여.연봉) DESC
+LIMIT 150, 10;
+```
+
+
+- 개선 쿼리
+    - 급여에서 먼저 10개만 가져와서 표현
+```SQL
+explain
+SELECT 사원.사원번호, 사원.이름, 사원.성, 사원.입사일자
+FROM
+     (SELECT 급여.사원번호
+      FROM 급여
+      WHERE 급여.사원번호 BETWEEN 10001 AND 50000
+      GROUP BY 급여.사원번호
+      ORDER BY SUM(급여.연봉) DESC
+      LIMIT 150, 10) AS 급여,
+      사원
+WHERE 사원.사원번호  = 급여.사원번호
+
+```
+
+
+### 대량의 데이터를 가져와 조인하는 나쁜 SQL문
+```
+부서관리자 테이블과 부서사원_매핑 테이블을 부서번호 열로 조인하고
+중복을 제거한 부서번호를 출력하는 쿼리
+```
+
+- 악성쿼리
+    - 부서사원매핑 테이블에서 모든 데이터를 가져온 뒤,관리자 테이블과 매핑하여 데이터를 조회한다.
+
+```SQL
+EXPLAIN
+SELECT DISTINCT 매핑.부서번호
+  FROM 부서관리자 관리자,
+       부서사원_매핑 매핑
+WHERE 관리자.부서번호 = 매핑.부서번호
+ORDER BY 매핑.부서번호;
+```
+
+
+- 개선 쿼리
+    - 둘중 하나의 테이블은 단순히 부서번호가 존재하는지 여부만 판단하면 되기 떄문에 데이터 유무만 판단.
+
+```SQL
+
+explain
+SELECT 매핑.부서번호
+FROM (SELECT DISTINCT 부서번호
+      FROM 부서사원_매핑 ) 매핑
+WHERE EXISTS(SELECT 1 FROM 부서관리자 관리자 WHERE 부서번호 = 매핑.부서번호)
+ORDER BY 매핑.부서번호;
+```
